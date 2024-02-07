@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question 3</title>
+</head>
+<body>
+    <table>
+        <tr>
+            <th>Music lover's survey</th>
+        </tr>
+    </table>
+    <form action="POST">
+        <fieldset>
+            <legend>Music Lover's Personal Information</legend>
+            <label for="firstName">First Name </label>
+            <input type="text" id="firstName"><br><br>
+            
+            <label for="familyName">Family Name </label>
+            <input type="text" id="familyName"><br><br>
+
+            Gender:
+            <input type="radio" value="female" name="gender" id="female">
+            <label for="female">Female</label>
+            <input type="radio" value="male" name="gender" id="male">
+            <label for="male">Male</label><br><br>
+
+            <label for="age-category">What age category are you from? </label>
+            <select for="age-category">
+                <option value="less18">Less than 18</option>
+                <option value="more18">18 or more</option>
+            </select>
+        </fieldset>
+    </form>
+</body>
+</html>
