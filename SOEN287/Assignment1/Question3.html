@@ -11,14 +11,14 @@
             <th>Music lover's survey</th>
         </tr>
     </table>
-    <form action="POST">
+    <form  id="survey">
         <fieldset>
             <legend>Music Lover's Personal Information</legend>
             <label for="firstName">First Name </label>
-            <input type="text" id="firstName"><br><br>
+            <input type="text" id="firstName" name="firstName"><br><br>
             
             <label for="familyName">Family Name </label>
-            <input type="text" id="familyName"><br><br>
+            <input type="text" id="familyName" name="lastName"><br><br>
 
             Gender:
             <input type="radio" value="female" name="gender" id="female">
@@ -26,12 +26,61 @@
             <input type="radio" value="male" name="gender" id="male">
             <label for="male">Male</label><br><br>
 
-            <label for="age-category">What age category are you from? </label>
-            <select for="age-category">
+            <label for="ageCategory">What age category are you from? </label>
+            <select name="ageCategory" id="ageCategory">
                 <option value="less18">Less than 18</option>
                 <option value="more18">18 or more</option>
-            </select>
-        </fieldset>
+            </select><br><br>
+
+            <label for="email">Email </label>
+            <input type="text" id="email" name="email">
+        </fieldset><br>
+        <fieldset>
+            <legend>Survey Questions</legend>
+            Which type of music do you listen to? (Pick as many as apply)<br>
+            <input type="checkbox" name="genre" value="breakcore" id="breakcore">
+            <label for="breakcore">Breakcore</label>
+
+            <input type="checkbox" name="genre" value="classical" id="classical">
+            <label for="classical">Classical music</label>
+
+            <input type="checkbox" name="genre" value="jungle" id="jungle">
+            <label for="jungle">Jungle</label><br>
+
+            <input type="checkbox" name="genre" value="rap" id="rap">
+            <label for="rap">Hip Hop/Rap</label>
+
+            <input type="checkbox" name="genre" value="pop" id="pop">
+            <label for="pop">Pop (Popular music)</label>
+
+            <input type="checkbox" name="genre" value="soundtrack" id="soundtrack">
+            <label for="soundtrack">Soundtracks</label><br>
+
+            <input type="checkbox" name="genre" value="other" id="other">
+            <label for="other">Other</label><br><br>
+
+            List your 3 favorite artists/bands:<br>
+            <input type="text" id="artist1" name="artist1">
+            <input type="text" id="artist2" name="artist2">
+            <input type="text" id="artist3" name="artist3"><br><br>
+
+            If you were to win tickets, which show would like 2 tickets to?<br>
+            <input type="radio" name="tickets" value="britFloyd" id="britFloyd">
+            <label for="britFloyd">BRIT FLOYD (March 24, 2016)</label>
+
+            <input type="radio" name="tickets" value="ironMaiden" id="ironMaiden">
+            <label for="ironMaiden">IRON MAIDEN (April 1, 2016)</label>
+
+            <input type="radio" name="tickets" value="janetJackson" id="janetJackson">
+            <label for="janetJackson">JANET JACKSON (June 17, 2016)</label>
+
+            <input type="radio" name="tickets" value="adele" id="adele">
+            <label for="adele">ADELE (September 30, 2016)</label>
+        </fieldset><br><br>
+
+        Thank you for taking the time to fill out our survey!<br><br>
+        <button type="submit" form="survey">Submit</button>
+        <button form="survey" type="reset">Reset</button>
     </form>
 </body>
 </html>
