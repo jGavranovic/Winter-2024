@@ -3,7 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Question 3</title>
+    <title>Question 4</title>
+    <style>
+        body{
+            background-color: #711DB0;
+        }
+
+        #fieldset1 {
+            border: 3px greenyellow solid;
+            background: #FFA732;
+        }
+
+        #fieldset2 {
+            border: 3px pink solid;
+            background-color: #C21292;
+        }
+
+        #fieldset1 legend {
+            color: greenyellow;
+        }
+
+        #fieldset2 legend {
+            color: pink;
+        }
+
+        #fieldset1 label {
+            color: greenyellow;
+            filter:brightness(150%);
+        }
+
+        #fieldset2 label {
+            color: pink;
+            filter: brightness(150%);
+        }
+
+        label {
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
     <table>
@@ -11,8 +48,8 @@
             <td><h1>Music lover's survey</h1></td>
         </tr>
     </table>
-    <form  id="survey">
-        <fieldset>
+    <form  id="survey" >
+        <fieldset id="fieldset1">
             <legend>Music Lover's Personal Information</legend>
             <label for="firstName">First Name </label>
             <input type="text" id="firstName" name="firstName"><br><br>
@@ -35,7 +72,7 @@
             <label for="email">Email </label>
             <input type="email" id="email" name="email">
         </fieldset><br>
-        <fieldset>
+        <fieldset id="fieldset2">
             <legend>Survey Questions</legend>
             <label>Which type of music do you listen to? (Pick as many as apply)</label><br>
             <input type="checkbox" name="genre[]" value="breakcore" id="breakcore">
@@ -50,7 +87,7 @@
             <input type="checkbox" name="genre[]" value="rap" id="rap">
             <label for="rap">Hip Hop/Rap</label>
 
-            <input type="checkbox" name="genre[]" value="pop" id="pop">
+            <input type="checkbox" name="genre" value="pop" id="pop">
             <label for="pop">Pop (Popular music)</label>
 
             <input type="checkbox" name="genre[]" value="soundtrack" id="soundtrack">
