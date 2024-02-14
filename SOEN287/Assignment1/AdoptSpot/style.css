@@ -1,4 +1,4 @@
-html,body {
+    html,body {
     margin: 0;
     padding: 0;
 }
@@ -8,7 +8,11 @@ body {
     flex-direction: column;
     min-height: 100vh;
 }
-
+.menu, .header {
+    background-color: #c7f9cc;
+    border: 2px solid #677bee;
+    margin: 3px;
+}
 .logo {
     width: 100px;
     padding-left: 20px;
@@ -25,7 +29,7 @@ body {
 }
 
 .menu {
-    padding-right: 100px;
+    padding-right: 0px;
 }
 .center {
     display: flex;
@@ -55,6 +59,7 @@ a {
 .content {
     margin-right: 50px;
     flex-grow: 1;
+    padding-left: 50px;
 }
 .content h1 {
     text-align: center;
