@@ -4,8 +4,8 @@ import clients.*;
 import java.util.Scanner;   
 
 public class Driver {
-    private static Item[] collection;
-    private static Client[] clients;
+    private static Item[] collection = new Item[0];
+    private static Client[] clients = new Client[0];
     private static Scanner scan = new Scanner(System.in);
     public static void main(String[] args){
         collection = new Item[4];
@@ -281,12 +281,16 @@ public class Driver {
         System.out.println("    3. Media");
         switch (scan.nextLine()){
             case "1":
+                scan.next();
                 printBooks(); break;
             case "2":
+                scan.next();
                 printJournals(); break;
             case "3":
+                scan.next();
                 printMedia(); break;
             default:
+                scan.next();
                 defaultOption();
         }
     }
@@ -314,6 +318,63 @@ public class Driver {
             System.out.println(item+"\n");
         }
     }
+
+    private static void chooseOption2(){
+        printOption2();
+        switch (scan.nextLine()){
+            case "1":
+                scan.next(); addClientOption(); break;
+            case "2":
+                scan.next(); editClientOption(); break;
+            case "3":
+                scan.next(); removeClientOption(); break;
+            default:
+                defaultOption();
+        }
+    }
+
+
+    private static void printOption2(){
+        System.out.println("Choose one of the following options");
+        System.out.println("    1. Add a client");
+        System.out.println("    2. Edit a client");
+        System.out.println("    3. Remove a client");
+    }
+
+    private static void addClientOption(){
+        System.out.println("Please enter the information of the new client");
+
+        System.out.print("Name: ");
+        String name = scan.next();
+        System.out.print("Email: ");
+        String email = scan.next();
+        System.out.print("Phone number: ");
+        long phoneNumber = scan.nextLong();
+
+        addClient(new Client(name, email, phoneNumber));
+        System.out.println("New client was added");
+    }
+
+    private static void addClient(Client client){
+        Client[] newClients = new Client[clients.length+1];
+        int i=0;
+        for (i=0;i<clients.length; i++ ){
+            newClients[i] = clients[i];
+        }
+        newClients[i] = client;
+    }
+
+    private static void editClientOption(){
+        System.out.print("Enter the id of the client you would like to edit: ");
+        long clientId = scan.nextLong();
+        if (!checkClientIdExist(clientId)){
+            System.out.println("No such client exists");
+            return;
+        }
+        
+
+    }
+
     private static boolean checkItemExist(Item item){
         for (Item collection : collection) {
             if (collection==item)
@@ -325,6 +386,14 @@ public class Driver {
     private static boolean checkItemIdExists(String itemId){
         for (Item item : collection) {
             if (item.getItemId().equals(itemId))
+                return true;
+        }
+        return false;
+    }
+
+    private static boolean checkClientIdExist(long clientId){
+        for (Client client : clients) {
+            if (client.getClientId()==clientId)
                 return true;
         }
         return false;
