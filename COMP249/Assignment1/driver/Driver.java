@@ -1,10 +1,12 @@
 package driver;
 import items.*;
 import clients.*;
+import java.util.Scanner;   
 
 public class Driver {
     private static Item[] collection;
     private static Client[] clients;
+    private static Scanner scan = new Scanner(System.in);
     public static void main(String[] args){
         collection = new Item[4];
         collection[0] = new Media("Death note", "Tsugomi Oba", 2006, "Manga");
@@ -13,6 +15,30 @@ public class Driver {
         collection[1] = new Media((Media)collection[0]);
         collection[2] = new Book("Snowcrash", "Neil stephenson", 1994, 560);
         collection[3] = new Journal("Nature", "Et al.", 1990, 347);
+        while (true) {
+            printMainMenu();
+            switch (scan.next()){
+                case "1":
+                    chooseOption1(); break;
+                case "2":
+                    chooseOption2(); break;
+                case "3":
+                    chooseOption3(); break;
+                case "4":
+                    chooseOption4(); break;
+                case "5":
+                    chooseOption5(); break;
+                case "6":
+                    chooseOption6(); break;
+                case "7":
+                    chooseOption7(); break;
+                case "8":
+                    chooseOption8(); break;
+                default:
+                    defaultOption();
+            }
+        }
+        
 
     }
 
@@ -28,6 +54,23 @@ public class Driver {
         System.out.println("    8. Quit");
     }
 
+    private static void chooseOption1(){
+        printOption1();
+        switch (scan.next()){
+            case "1":
+                addItemOption(); break;
+            case "2":
+                deleteItemOption(); break;
+            case "3":
+                editItemOption(); break;
+            case "4":
+                listCategoryOption(); break;
+            case "5":
+                listAllItemOption(); break;
+            default:
+                defaultOption();
+        }
+    }
     private static void printOption1(){
         System.out.println("Please select an option: ");
         System.out.println("    1. Add an item");
@@ -37,7 +80,72 @@ public class Driver {
         System.out.println("    5. List all items");
     }
 
-    private static void addItem(Item item){
+    private static void addItemOption(){
+        System.out.println("What type is this new item?");
+        System.out.println("    1. Book");
+        System.out.println("    2. Journal");
+        System.out.println("    3. Media");
+        switch(scan.next()){
+            case "1":
+                addBookOption(); break;
+            case "2":
+                addJournalOption(); break;
+            case "3":
+                addMediaOption(); break;
+            default:
+                defaultOption();
+        }
+    }
+
+    private static void addBookOption(){
+        System.out.println("Please enter the information of the new book:");
+
+        System.out.print("Name: ");
+        String name = scan.nextLine();
+        System.out.print("Author: ");
+        String author = scan.nextLine();
+        System.out.print("Year published: ");
+        int yearPublised = scan.nextInt();
+        System.out.print("Page number: ");
+        int pageNumber = scan.nextInt();
+
+        addItemToCollection(new Book(name, author, yearPublised, pageNumber));
+        System.out.println("The book has been added to the colection");
+    }
+
+    private static void addJournalOption(){
+        System.out.println("Please enter the information of the new journal:");
+
+        System.out.print("Name: ");
+        String name = scan.nextLine();
+        System.out.print("Author: ");
+        String author = scan.nextLine();
+        System.out.print("Year published: ");
+        int yearPublised = scan.nextInt();
+        System.out.print("Volume number: ");
+        int volNumber = scan.nextInt();
+
+        addItemToCollection(new Journal(name, author, yearPublised, volNumber));
+        System.out.println("The journal has been added to the colection");
+    }
+
+    private static void addMediaOption(){
+        System.out.println("Please enter the information of the new media:");
+
+        System.out.print("Name: ");
+        String name = scan.nextLine();
+        System.out.print("Author: ");
+        String author = scan.nextLine(); scan.next();
+        System.out.print("Year published: ");
+        int yearPublised = scan.nextInt();
+        System.out.print("Type: ");
+        String type = scan.next();
+
+        addItemToCollection(new Media(name, author, yearPublised, type));
+        System.out.println("The media has been added to the colection");
+    }
+
+    private static void addItemToCollection(Item item){
         Item[] newCollection = new Item[collection.length+1];
         for(int i=0;i<collection.length;i++){
             newCollection[i] = collection[i];
@@ -46,26 +154,166 @@ public class Driver {
         collection = newCollection;
     }
 
-    private static void removeItem(Item item){
-        if (!checkItemExist(item)){
-            System.out.println("This item is not in the collection\n");
+    private static void deleteItemOption(){
+        System.out.print("Enter the id of the item your would like to remove: ");
+        removeItem(scan.next());
+    }
+
+    private static void removeItem(String itemId){
+        if (!checkItemIdExists(itemId)){
+            System.out.println("This item does not exist!");
             return;
         }
-
         Item[] newCollection = new Item[collection.length-1];
-        int i;
-        for (i=0;i<collection.length;i++){
-            if(collection[i]==item)
+        int i=0;
+        for (; i < newCollection.length; i++) {
+            if (collection[i].getItemId() == itemId) 
                 break;
             newCollection[i] = collection[i];
         }
-        for (;i<newCollection.length;i++){
+        for (; i < newCollection.length; i++) {
             newCollection[i] = collection[i+1];
         }
-        collection = newCollection;
-        item.setLoaned(false);
+        System.out.println("The item has been removed");
     }
 
+    private static void editItemOption(){
+        System.out.print("Enter the id of the item you would like to edit: ");
+        String itemId = scan.next();
+        if (!checkItemIdExists(itemId)){
+            System.out.println("This item does not exist!");
+            return;
+        }
+        System.out.println("Which attribute would you like to edit?");
+        System.out.println("    1. Name");
+        System.out.println("    2. Author");
+        System.out.println("    3. Year published");
+        if (itemId.substring(0,1).equals("B"))
+            System.out.println("    4. Page number");
+        else if (itemId.substring(0,1).equals("J"))
+            System.out.println("    4. Volume number");
+        else if (itemId.substring(0,1).equals("M"))
+            System.out.println("    4. Type");
+        switch (scan.next()){
+            case "1":
+                editItemName(itemId); break;
+            case "2":
+                editItemAuthor(itemId); break;
+            case "3":
+                editItemYear(itemId); break;
+            case "4":
+            if (itemId.substring(0,1).equals("B"))
+                editItemPage(itemId);
+            else if (itemId.substring(0,1).equals("J"))
+                editItemVol(itemId);
+            else if (itemId.substring(0,1).equals("M"))
+                editItemType(itemId);
+            break;
+            default:
+                defaultOption();
+        }
+    }
+
+    private static void editItemName(String itemId){
+        System.out.print("Enter the new name: ");
+        for (int i=0; ; i++){
+            if (collection[i].getItemId().equals(itemId)){
+                collection[i].setItemName(scan.nextLine());scan.next();
+                System.out.println("The item's name was changed");
+                break;
+            }
+        }
+    }
+    private static void editItemAuthor(String itemId){
+        System.out.print("Enter the new author: ");
+        for (int i=0; ; i++){
+            if (collection[i].getItemId().equals(itemId)){
+                collection[i].setAuthor(scan.nextLine()); scan.next();
+                System.out.println("The item's author was changed");
+                break;
+            }
+        }
+    }
+    private static void editItemYear(String itemId){
+        System.out.print("Enter the new author: ");
+        for (int i=0; ; i++){
+            if (collection[i].getItemId().equals(itemId)){
+                collection[i].setYearPublished(scan.nextInt());
+                System.out.println("The item's year was changed");
+                break;
+            }
+        }
+    }
+    private static void editItemPage(String itemId){
+        System.out.print("Enter the new page count: ");
+        for (int i=0; ; i++){
+            if (collection[i].getItemId().equals(itemId)){
+                ((Book)collection[i]).setPageNumber(scan.nextInt());
+                System.out.println("The item's page count was changed");
+                break;
+            }
+        }
+    }
+    private static void editItemVol(String itemId){
+        System.out.print("Enter the new volume number: ");
+        for (int i=0; ; i++){
+            if (collection[i].getItemId().equals(itemId)){
+                ((Journal)collection[i]).setVolNumber(scan.nextInt());
+                System.out.println("The item's volume number was changed");
+                break;
+            }
+        }
+    }
+    private static void editItemType(String itemId){
+        System.out.print("Enter the new type: ");
+        for (int i=0; ; i++){
+            if (collection[i].getItemId().equals(itemId)){
+                ((Media)collection[i]).setType(scan.next());
+                System.out.println("The item's type was changed");
+                break;
+            }
+        }
+    }
+    private static void listCategoryOption(){
+        System.out.println("Enter the category of items you would like to list");
+        System.out.println("    1. Book");
+        System.out.println("    2. Journal");
+        System.out.println("    3. Media");
+        switch (scan.nextLine()){
+            case "1":
+                printBooks(); break;
+            case "2":
+                printJournals(); break;
+            case "3":
+                printMedia(); break;
+            default:
+                defaultOption();
+        }
+    }
+
+    private static void printBooks(){
+        for (Item item : collection) {
+            if (item.getItemId().substring(0,1).equals("B"))
+            System.out.println(item+"\n");
+        }
+    }
+    private static void printJournals(){
+        for (Item item : collection) {
+            if (item.getItemId().substring(0,1).equals("J"))
+            System.out.println(item+"\n");
+        }
+    }
+    private static void printMedia(){
+        for (Item item : collection) {
+            if (item.getItemId().substring(0,1).equals("M"))
+            System.out.println(item+"\n");
+        }
+    }
+    private static void listAllItemOption(){
+        for (Item item : collection) {
+            System.out.println(item+"\n");
+        }
+    }
     private static boolean checkItemExist(Item item){
         for (Item collection : collection) {
             if (collection==item)
@@ -74,10 +322,17 @@ public class Driver {
         return false;
     }
 
-    // private static void editItem(Item item, String attribute){
-    //     switch (attribute.toLowerCase()){
-    //         "name":
+    private static boolean checkItemIdExists(String itemId){
+        for (Item item : collection) {
+            if (item.getItemId().equals(itemId))
+                return true;
+        }
+        return false;
+    }
 
-    //     }
-    // }
+
+
+    private static void defaultOption(){
+        System.out.println("The option you provided was invalid, please try again!");
+    }
 }
