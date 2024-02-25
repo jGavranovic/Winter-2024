@@ -2,18 +2,18 @@ package clients;
 import items.*;
 
 public class Client {
-    private long clientId;
+    private String clientId;
     private String name;
     private String email;
-    private long phoneNumber;
+    private String phoneNumber;
     private Item[] loans = {};
     private static int globalClientIdCount=0;
 
     
-    public long getClientId() {
+    public String getClientId() {
         return clientId;
     }
-    public void setClientId(long clientId) {
+    public void setClientId(String clientId) {
         this.clientId = clientId;
     }
     public String getName() {
@@ -28,22 +28,24 @@ public class Client {
     public void setEmail(String email) {
         this.email = email;
     }
-    public long getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
-    public void setPhoneNumber(long phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
-
+    public int getLoansLength() {
+        return loans.length;
+    }
     public Client(){
 
     }
 
-    public Client(String name, String email, long phoneNumber){
+    public Client(String name, String email, String phoneNumber){
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.clientId = ++globalClientIdCount;
+        this.clientId = Integer.toString(++globalClientIdCount);
     }
 
     public Client(Client client){
@@ -53,7 +55,8 @@ public class Client {
     @Override
     public String toString(){
         String output="";
-        output+="Name: "+name;
+        output+="Id: "+clientId;
+        output+="\nName: "+name;
         output+="\nEmail: "+email;
         output+="\nPhone number: "+phoneNumber;
         output+="\n\n"+this.loansToString();
@@ -81,7 +84,7 @@ public class Client {
             return false;
         Client client = (Client)object;
         //Doesn't check id or loans
-        return this.name.equals(client.name) && this.email.equals(client.email) && this.phoneNumber==client.phoneNumber;
+        return this.name.equals(client.name) && this.email.equals(client.email) && this.phoneNumber.equals(client.phoneNumber);
     }
 
     public void addItem(Item item){
@@ -100,10 +103,10 @@ public class Client {
     }
 
     public void removeItem(Item item){
-        if(!this.checkLoaned(item)){
-            System.out.println("This client is not loaning this item\n");
-            return;
-        }
+        // if(!this.checkLoaned(item)){
+        //     System.out.println("This client is not loaning this item\n");
+        //     return;
+        // }
 
         Item[] newLoans = new Item[loans.length-1];
         int i;
@@ -118,6 +121,7 @@ public class Client {
         loans = newLoans;
         item.setLoaned(false);
     }
+
 
     private boolean checkLoaned(Item item){
         for (Item loan : loans) {

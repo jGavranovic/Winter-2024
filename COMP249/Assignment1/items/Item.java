@@ -88,6 +88,7 @@ public abstract class Item {
         String output = "";
 
         output+="Id: " + this.itemId;
+        output+="\nOn loan: "+(loaned?"Yes":"No");
         output+="\nName: " + this.itemName;
         output+="\nAuthor: " + this.author;
         output+="\nYear published: " + this.yearPublished;
