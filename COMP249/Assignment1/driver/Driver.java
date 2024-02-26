@@ -5,17 +5,17 @@ import java.util.Scanner;
 
 public class Driver {
     private static Item[] collection = new Item[0];
-    private static Client[] clients = {new Client("john", "eqw@gmail.com", "3213214")};//new Client[0];
+    private static Client[] clients = new Client[0];
     private static Scanner scan = new Scanner(System.in);
     public static void main(String[] args){
-        collection = new Item[4];
-        collection[0] = new Media("Death note", "Tsugomi Oba", 2006, "Manga");
-        //list[1] = new Media("Oshi no Ko", "Aka Akasaka", 2020, "Manga");
-        //list[1] = new Media("Death note", "Tsugomi Oba", 2006, "Manga");
-        collection[1] = new Media((Media)collection[0]);
-        collection[2] = new Book("Snowcrash", "Neil stephenson", 1994, 560);
-        collection[3] = new Journal("Nature", "Et al.", 1990, 347);
-        boolean wantMenu = true, escape;
+        // collection = new Item[4];
+        // collection[0] = new Media("Death note", "Tsugomi Oba", 2006, "Manga");
+        // //list[1] = new Media("Oshi no Ko", "Aka Akasaka", 2020, "Manga");
+        // //list[1] = new Media("Death note", "Tsugomi Oba", 2006, "Manga");
+        // collection[1] = new Media((Media)collection[0]);
+        // collection[2] = new Book("Snowcrash", "Neil stephenson", 1994, 560);
+        // collection[3] = new Journal("Nature", "Et al.", 1990, 347);
+        boolean wantScenario = false, escape;
         do {
         System.out.println("Select the behavior you would like");
         System.out.println("    1. Default blank start");
@@ -24,11 +24,11 @@ public class Driver {
         String input = scan.nextLine();
         switch (input){
             case "1":
-                wantMenu = true;
+                wantScenario = false;
                 escape = true;
                 break;
             case "2":
-                wantMenu = false;
+                wantScenario = true;
                 escape = true;
                 break;
             default:
@@ -36,7 +36,55 @@ public class Driver {
                 escape = false;
         }
         } while (!escape);
-        while (wantMenu) {
+
+        if (wantScenario){
+            //Books
+            addItemToCollection(new Book("Project Hail Mary", "Andy Weir", 2022, 496));
+            addItemToCollection(new Book("No Longer Human", "Osamu Dazai", 1981, 192));
+            addItemToCollection(new Book("No Longer Human", "Osamu Dazai", 1981, 192));
+            //Journals
+            addItemToCollection(new Journal("Nature", "Magdalena Skipper", 1869, 1));
+            addItemToCollection(new Journal("Science", "Holden Thorp", 1880, 1));
+            addItemToCollection(new Journal("Science Digest", "Holden Thorp", 1880, 1));
+            //Media
+            addItemToCollection(new Media("Matrix", "The Wachowskis", 2010, "Blu-ray"));
+            addItemToCollection(new Media("Dune", "Dennis Villeneuve", 2022, "Blu-ray"));
+            addItemToCollection(new Media("Blade Runner 2049", "Dennis Villeneuve", 2018, "Blu-ray"));
+
+            listAllItemOption();
+
+            //Clients
+            addClient(new Client("Omori", "omori@gmail.com", "1111111111"));
+            addClient(new Client("Basil", "basil@hotmail.com", "2222222222"));
+            addClient(new Client("Basil", "basil@hotmail.com", "2222222222"));
+
+            printAllClients();
+
+            System.out.println("DIFFERENT TYPE: B1 == M1 ? "+(collection[0].equals(collection[6])));
+            System.out.println("SAME TYPE DIFFERENT: J1 == J2 ? "+(collection[3].equals(collection[4])));
+            System.out.println("SAME TYPE SAME: B2 == B3 ? "+(collection[1].equals(collection[2])));
+            System.out.println("SIMILAR INFO DIFFERENT: M2 == M3 ? "+(collection[7].equals(collection[8])));
+            System.out.println("DIFFERENT CLIENTS: 1 == 2 ? "+(clients[0].equals(clients[1])));
+            System.out.println("SAME CLIENTS: 2 == 3 ? "+(clients[1].equals(clients[2])));
+
+            //Create arrays of each type + collection with all type already exists
+            Book[] books = {(Book)collection[0],(Book)collection[1],(Book)collection[2], null, null}; //Partially filled
+            Journal[] journals = {(Journal)collection[3],(Journal)collection[4],(Journal)collection[5]};
+            Media[] medias = {(Media)collection[6],(Media)collection[7],(Media)collection[8]};
+
+            System.out.println("\nBiggest book in partially filled book array: ");
+            System.out.println(getBiggestBook(books));
+
+            System.out.println("Call copyBooks() on media array");
+            try {
+                Book[] copy = copyBooks(medias);
+                System.out.println(copy);
+            } catch (ClassCastException e) {
+                System.out.println("Wrong array type");
+            }
+        }
+
+        while (true) {
             printMainMenu();
            // printAllClients();
             String input = scan.nextLine();
@@ -605,14 +653,37 @@ public class Driver {
                 }
             }
         }
-        return (Book)collection[index];
+        return (max!=0?(Book)collection[index]:null);
     }
+
+    private static Book getBiggestBook(Book[] books){
+        int max = 0;
+        int index = 0;
+        for (int i=0; i<books.length; i++) {
+            if (books[i] == null)
+                break;
+            if (books[i].getPageNumber() > max){
+                max = (books[i]).getPageNumber();
+                index = i;
+            }
+        }
+        return (max!=0?books[index]:null);
+    }
+
 
     private static void chooseOption7(){
 
     }
     
-    private static Book[] copyBooks(Book[] books){
+    private static Book[] copyBooks(Item[] items) throws ClassCastException{
+        Book[] books = null;
+        // try {
+        books = (Book[])items;
+        // } catch (ClassCastException e) {
+        //     System.out.println("Array not of type books!");
+        //     return null;
+        // }
+
         Book[] copy = new Book[books.length];
 
         for (int i=0; i<books.length; i++){
