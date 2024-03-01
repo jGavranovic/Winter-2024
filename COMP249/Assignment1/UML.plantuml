@@ -1,0 +1,169 @@
+@startuml UML
+package items {
+abstract Item {
+    #String itemId
+    #String itemName
+    #String author
+    #int yearPublished
+    {static} #int globalItemIdCount
+    #boolean loaned
+
+    #Item()
+    #Item(String itemName, String author, int yearPublished)
+    #Item(Item item)
+    +String getItemId()
+    +void setItemId(String itemId)
+    +String getItemName()
+    +boolean getLoaned()
+    +void setLoaned(boolean bool)
+    +void setItemName(String itemName)
+    +String getAuthor()
+    +void setAuthor(String author)
+    +int getYearPublished()
+    +void setYearPublished(int yearPublished)
+    +int getGlobalItemIdCount()
+    +setGlobalItemIdCount(int globalItemIdCount)
+    +String toString()
+    +boolean equals(Object object)
+}
+
+Class Book {
+    -int pageNumber
+    {static} -int globalBookCount
+    +Book()
+    +Book(String itemName, String author, int yearPublished, int pageNumber)
+    +Book(Book book)
+    +int getPageNumber()
+    +void setPageNumber(int pageNumber)
+    {static} +int getGlobalBookCount()
+    {static} +void setGlobalBookCount(int globalBookCount)
+    +String toString()
+    +boolean equals(Object object)
+}
+
+Class Journal {
+    -int voNumber
+    {static} -int globalJournalCount
+    +Journal()
+    +Journal(String itemName, String author, int yearPublished, int volNumber)
+    +Journal(Journal journal)
+    +int getVolNumber()
+    +void setVolNumber(int volNumber)
+    {static} +int getGlobalJournalCount()
+    {static} +void setGlobalJournalCount(int globalJournalCount)
+    +String toString()
+    +boolean equals(Object object)
+}
+
+Class Media {
+    -String type
+    {static} -int globalMediaCount
+    +Media()
+    +Media(String itemName, String author, int yearPublished, String type)
+    +Media(Media media)
+    +String getType()
+    +void setType(String type)
+    {static} +int getGlobalMediaCount()
+    {static} +void setGlobalMediaCount(int globalMediaCount)
+    +String toString()
+    +boolean equals(Object object)
+
+}
+Item <|-- Book
+Item <|-- Journal
+Item <|-- Media
+}
+
+package clients {
+    Class Client {
+        -String clientId
+        -String name
+        -String email
+        -String phoneNumber
+        -Item[] loans
+        {static} -int globalClientIdCount
+        +Client()
+        +Client(String name, String email, String phoneNumber)
+        +Client(Client client)
+        +String getClientId()
+        +void setClientId(String clientId)
+        +String getName()
+        +void setName(String name)
+        +String getEmail()
+        +void setEmail(String email)
+        +String getPhoneNumber()
+        +void setPhoneNumber(String phoneNumber)
+        +int getLoansLength()
+        +String loansToString()
+        +String toString()
+        +boolean equals(Object object)
+        +void addItem(Item item)
+        +void removeItem(Item item)
+        -boolean checkLoaned(Item item)
+    }
+}
+
+package driver {
+    Class Driver {
+        {static} -Item[] collection
+        {static} -Client[] clients
+        {static} -Scanner scan
+        {static} +void main(String[] args)
+        {static} -void printMainMenu()
+        {static} -void chooseOption1()
+        {static} -void printOption1()
+        {static} -void addItemOption()
+        {static} -void addBookOption()
+        {static} -void addJournalOption()
+        {static} -void addMediaOption()
+        {static} -void addItemToCollection()
+        {static} -void deleteItemOption()
+        {static} -void removeItem()
+        {static} -void editItemOption()
+        {static} -void editItemName(String itemId)
+        {static} -void editItemAuthor(String itemId)
+        {static} -void editItemYear(String itemId)
+        {static} -void editItemPage(String itemId)
+        {static} -void editItemVol(String itemId)
+        {static} -void editItemType(String itemId)
+        {static} -void listCategoryOption()
+        {static} -void printBooks()
+        {static} -void printJournals()
+        {static} -void printMedia()
+        {static} -void listAllItemOption()
+        {static} -void chooseOption2()
+        {static} -void printOption2()
+        {static} -void addClientOption()
+        {static} -void addClient(Client client)
+        {static} -void editClientOption()
+        {static} -void editClientNameOption(String clientId)
+        {static} -void editClientEmailOption(String clientId)
+        {static} -void editClientPhoneOption(String clientId)
+        {static} -void removeClientOption()
+        {static} -void chooseOption3()
+        {static} -void addItemLeaseOption()
+        {static} -void addItemClient(String clientId, String itemId)
+        {static} -void returnItemLeaseOption()
+        {static} -void returnItemClient(String itemId)
+        {static} -void chooseOption4()
+        {static} -void chooseOption5()
+        {static} -Book getBiggestBook()
+        {static} -Book getBiggestBook(Book[] books)
+        {static} -void chooseOption7()
+        {static} -Book[] bopyBooks()
+        {static} -Book[] copyBooks(Item[] items)
+        {static} -void chooseOption8()
+        {static} -boolean checkItemIdExists(String itemId)
+        {static} -boolean checkClientIdExist(String clientId)
+        {static} -void printAllClients()
+        {static} -boolean checkLeased(String itemId)
+        {static} -voud defaultOption()
+        
+
+
+
+
+    }
+}
+
+@enduml

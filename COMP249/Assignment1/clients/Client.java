@@ -103,10 +103,9 @@ public class Client {
     }
 
     public void removeItem(Item item){
-        // if(!this.checkLoaned(item)){
-        //     System.out.println("This client is not loaning this item\n");
-        //     return;
-        // }
+        if(!this.checkLoaned(item)){
+            return;
+        }
 
         Item[] newLoans = new Item[loans.length-1];
         int i;

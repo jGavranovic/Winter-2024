@@ -7,14 +7,8 @@ public class Driver {
     private static Item[] collection = new Item[0];
     private static Client[] clients = new Client[0];
     private static Scanner scan = new Scanner(System.in);
+
     public static void main(String[] args){
-        // collection = new Item[4];
-        // collection[0] = new Media("Death note", "Tsugomi Oba", 2006, "Manga");
-        // //list[1] = new Media("Oshi no Ko", "Aka Akasaka", 2020, "Manga");
-        // //list[1] = new Media("Death note", "Tsugomi Oba", 2006, "Manga");
-        // collection[1] = new Media((Media)collection[0]);
-        // collection[2] = new Book("Snowcrash", "Neil stephenson", 1994, 560);
-        // collection[3] = new Journal("Nature", "Et al.", 1990, 347);
         boolean wantScenario = false, escape;
         do {
         System.out.println("Select the behavior you would like");
@@ -101,8 +95,8 @@ public class Driver {
                     chooseOption5(); break;
                 case "6":
                     chooseOption6(); break;
-                // case "7":
-                //     chooseOption7(); break;
+                case "7":
+                    chooseOption7(); break;
                 case "8":
                     chooseOption8(); break;
                 default:
@@ -230,7 +224,7 @@ public class Driver {
     }
 
     private static void deleteItemOption(){
-        System.out.print("Enter the id of the item your would like to remove: ");
+        System.out.print("Enter the ID of the item your would like to remove: ");
         removeItem(scan.nextLine());
     }
 
@@ -254,7 +248,7 @@ public class Driver {
     }
 
     private static void editItemOption(){
-        System.out.print("Enter the id of the item you would like to edit: ");
+        System.out.print("Enter the ID of the item you would like to edit: ");
         String itemId = scan.nextLine();
         if (!checkItemIdExists(itemId)){
             System.out.println("This item does not exist!");
@@ -635,7 +629,7 @@ public class Driver {
         System.out.println("--------ALL LEASED ITEMS---------");
         for (Item item : collection) {
             if (item.getLoaned())
-                System.out.println(item);
+                System.out.println(item+"\n");
         }
     }
     private static void chooseOption6(){
@@ -672,9 +666,33 @@ public class Driver {
 
 
     private static void chooseOption7(){
+        System.out.println("---Here is a Book array which is a deep copy of all books in the collection (except for ID)---");
+        Book [] booksCopy = copyBooks();
 
+        for (Book book : booksCopy) {
+            System.out.println(book+"\n");
+        }
     }
     
+    private static Book[] copyBooks(){
+        int size = 0;
+        for (Item item : collection) {
+            if (item instanceof Book){
+                size++;
+            }
+        }
+
+        Book[] books = new Book[size];
+        int count=0;
+        for (int i=0; i<collection.length; i++){
+            if (collection[i] instanceof Book){
+                books[count++] = new Book((Book)collection[i]);
+            }
+        }
+
+        return books;
+    }
+
     private static Book[] copyBooks(Item[] items) throws ClassCastException{
         Book[] books = null;
         // try {
@@ -698,13 +716,6 @@ public class Driver {
         System.exit(0);
     }
     
-    private static boolean checkItemExist(Item item){
-        for (Item collection : collection) {
-            if (collection==item)
-                return true;
-        }
-        return false;
-    }
     private static boolean checkItemIdExists(String itemId){
         for (Item item : collection) {
             if (item.getItemId().equalsIgnoreCase(itemId))
@@ -720,7 +731,7 @@ public class Driver {
         return false;
     }
     private static void printAllClients(){
-        System.out.println("---List of all clients:");
+        System.out.println("----List of all clients:----");
         for (Client client : clients) {
             System.out.println(client+"\n");
         }
@@ -738,5 +749,14 @@ public class Driver {
 
     private static void defaultOption(){
         System.out.println("The input you provided was invalid, please try again!");
+    }
+    public Driver(){
+
+    }
+    public Driver(Item[] collection, Client[] clients){
+            
+        this.collection = collection;
+        this.clients = clients;
+
     }
 }
