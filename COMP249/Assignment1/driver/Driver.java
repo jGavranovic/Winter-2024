@@ -1,3 +1,13 @@
+/*
+ * Assignment 1 COMP 249
+ * Author: Jovan Gavranovic (40282175)
+ * Library Software
+ * This is the Driver class for a library software,
+ * It supports adding modifying and removing books, journals, media, and clients
+ * Clients can also lease items and return them
+ * It also gives the option to find the biggest book in the collection and make a copy of all the books in the collection array
+ * Initially, the user can choose between a blank start or a hard-coded scenario which then leads to the program
+ */
 package driver;
 import items.*;
 import clients.*;
@@ -67,15 +77,21 @@ public class Driver {
             Media[] medias = {(Media)collection[6],(Media)collection[7],(Media)collection[8]};
 
             System.out.println("\nBiggest book in partially filled book array: ");
-            System.out.println(getBiggestBook(books));
+            System.out.println(getBiggestBook(books)+"\n");
 
             System.out.println("Call copyBooks() on media array");
             try {
                 Book[] copy = copyBooks(medias);
                 System.out.println(copy);
             } catch (ClassCastException e) {
-                System.out.println("Wrong array type");
+                System.out.println("Wrong array type\n");
             }
+
+            // Book[] copyBooksTest = copyBooks(books);
+
+            // for (Book book : copyBooksTest) {
+            //     System.out.println(book);
+            // }
         }
 
         while (true) {
@@ -176,7 +192,7 @@ public class Driver {
         System.out.print("Year published: ");
         int yearPublised = scan.nextInt();
         System.out.print("Page number: ");
-        int pageNumber = scan.nextInt();
+        int pageNumber = scan.nextInt(); scan.nextLine();
 
         addItemToCollection(new Book(name, author, yearPublised, pageNumber));
         System.out.println("The book has been added to the colection");
@@ -192,7 +208,7 @@ public class Driver {
         System.out.print("Year published: ");
         int yearPublised = scan.nextInt();
         System.out.print("Volume number: ");
-        int volNumber = scan.nextInt();
+        int volNumber = scan.nextInt(); scan.nextLine();
 
         addItemToCollection(new Journal(name, author, yearPublised, volNumber));
         System.out.println("The journal has been added to the colection");
@@ -694,18 +710,22 @@ public class Driver {
     }
 
     private static Book[] copyBooks(Item[] items) throws ClassCastException{
-        Book[] books = null;
-        // try {
-        books = (Book[])items;
-        // } catch (ClassCastException e) {
-        //     System.out.println("Array not of type books!");
-        //     return null;
-        // }
+        Book[] books = (Book[])items;
 
-        Book[] copy = new Book[books.length];
+        int size = 0;
 
-        for (int i=0; i<books.length; i++){
-            copy[i] = new Book(books[i]);
+        for (int i=0; i<books.length;i++){
+            if (books[i] instanceof Book)
+                size++;
+        }
+    
+        Book[] copy = new Book[size];
+
+        for (int i=0, j=0; i<books.length; i++){
+            if (books[i]instanceof Book){
+                copy[j] = new Book(books[i]);
+                j++;
+            }
         }
 
         return copy;

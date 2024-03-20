@@ -1,3 +1,7 @@
+/*
+ * This is a Book class which is a subclass of the abstract Item class
+ * It adds the page number attribute to the object, as well as a custom toString and equals method
+ */
 package items;
 
 public class Book extends Item {

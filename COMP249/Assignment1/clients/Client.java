@@ -1,3 +1,8 @@
+/*
+ * This is a Client class which has an id, name, email, and phone number,
+ * As well as attributes to keep track of the current items being loaned by this client
+ * Including utility methods relating to loaning and returning items
+ */
 package clients;
 import items.*;
 

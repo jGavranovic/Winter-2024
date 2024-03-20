@@ -1,3 +1,7 @@
+/*
+ * This is an abstract Item class which is will be extended for Book, Journal, and Media
+ * It defines the itemId, itemName, author, and year published which are used as well as a custom toString and equals method
+ */
 package items;
 
 public abstract class Item {

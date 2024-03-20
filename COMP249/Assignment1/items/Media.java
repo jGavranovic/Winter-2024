@@ -1,3 +1,7 @@
+/*
+ * This is a Media class which is a subclass of the abstract Item class
+ * It adds the type attribute to the object, as well as a custom toString and equals method
+ */
 package items;
 
 public class Media extends Item {
