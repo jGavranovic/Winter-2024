@@ -2,11 +2,13 @@ import java.util.Scanner;
 import java.io.FileOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import movieExceptions.*;
 
 public class Driver {
     private static int manifestPointer = 0;
     private static String[] fileNames = new String[10];
     private static Scanner readMovies = null;
+    private static int currentLine = 0;
     public static void main(String[] args){
         
         //part 1's manifest file
@@ -20,20 +22,27 @@ public class Driver {
 
         //do_part3();
 
-        // String line = "1991,\"Freddy's Dead, The, Final Nightmare\",93,Comedy,R,4.9,Rachel Talalay,Johnny Depp,Tom Arnold,Yaphet Kotto";
+        //String line = "1990,Total Recall,113,Action,R,7.5,Paul Verhoeven,Ronny Cox,Rachel Ticotin,Marshall Bell,actor 4?";
         // System.out.println(parseEntry(line));
         do_part1(part1_manifest);
-
+        
         return;
     }
 
     private static String do_part1(String part1_manifest){
         generateFileNames();
-        for (int i=0; i<10; i++){
+        for (int i=0; i<1; i++){
+            currentLine = 0;
             generateReadMovies();
             while (readMovies.hasNextLine()){
+                currentLine++;
                 String line = readMovies.nextLine();
-                System.out.println(parseEntry(line)+"\n");
+                try {
+                    Movie movie = parseEntry(line);
+                    System.out.println(movie);
+                } catch (MovieSyntaxException mse){
+                    System.out.println(mse);
+                }
             }
         }
 
@@ -58,18 +67,25 @@ public class Driver {
         }
 
         readManifest.close();
+        System.out.println("Filenames: ");
+        for (String string : fileNames) {
+            System.out.println(string);
+        }
     }
 
     private static void generateReadMovies(){
+        System.out.println("readMovies currently pointing to: "+fileNames[manifestPointer]);
         try {
             readMovies = new Scanner(new FileInputStream("COMP249/Assignment 2/Movies/"+fileNames[manifestPointer++]));
         } catch (FileNotFoundException fnfe){
             System.out.println("File not found, exiting");
             System.exit(0);
         }
+
+
     }
 
-    private static Movie parseEntry(String entry){
+    private static Movie parseEntry(String entry) throws MovieSyntaxException {
         String[] splitStringComma = entry.split(",");
         // for (String string : splitStringComma) {
         //     System.out.println(string);
@@ -78,11 +94,12 @@ public class Driver {
         String quotedEntry = "";
         int index = 0;
         String[] movieAttributes = new String[10];
+        int i=0;
 
-        for (int i=0; i<splitStringComma.length; i++){
+        for (i=0; i<splitStringComma.length; i++){
             //Stop when movieAttributes is filled
             if (index == 10)
-                break;
+                throw new MovieSyntaxException(entry, fileNames[manifestPointer], currentLine);
             //If no quotes
             if (splitStringComma[i].indexOf("\"")==-1 && quoteCounter == 0){
                 movieAttributes[index++] = splitStringComma[i];
@@ -105,6 +122,9 @@ public class Driver {
                 quoteCounter++;
                 quotedEntry += splitStringComma[i]+",";
             }
+        }
+        if (index != 10){
+            throw new MovieSyntaxException(entry, "DEBUG", currentLine);
         }
         return new Movie(movieAttributes);
     }
