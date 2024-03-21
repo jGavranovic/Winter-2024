@@ -3,6 +3,8 @@ import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.ObjectOutputStream;
+import java.io.IOException;
 import movieExceptions.*;
 
 public class Driver {
@@ -18,16 +20,15 @@ public class Driver {
         String part1_manifest = "part1_manifest.txt"; 
 
         //part 2's manifest file
-        //String part2_manifest = do_part1(part1_manifest/*... */ ); //partition
+        String part2_manifest = do_part1(part1_manifest/*... */ ); //partition
 
         //part 3's manifest file
-        //String part3_manifest = do_part2(part2_manifest );
+        String part3_manifest = do_part2(part2_manifest );
 
         //do_part3();
 
         //String line = "1990,Total Recall,113,Action,R,7.5,Paul Verhoeven,Ronny Cox,Rachel Ticotin,Marshall Bell,actor 4?";
         // System.out.println(parseEntry(line));
-        do_part1(part1_manifest);
         // try {
         //     System.out.println(parseEntry("2004,\"I, Robot ,115,Action,PG-13,7.1,Alex Proyas,Will Smith,Bruce Greenwood,Chi McBride"));
         // } catch (SyntaxException e){ System.out.println(e);}
@@ -100,6 +101,57 @@ public class Driver {
         }
         manifestWriter.close();
         return part2_manifest;  
+    }
+
+    private static String do_part2(String part2_manifest){
+        manifestPointer = 0;
+        Scanner[] genreScanners = new Scanner[validGenres.length];
+
+        for (int i=0;i<genreScanners.length;i++){
+            try {
+                genreScanners[i] = new Scanner(new FileInputStream("Genres/"+validGenres[i]+".csv"));
+
+            } catch (FileNotFoundException fnfe){System.out.println("Part2: file not found");}
+        }
+
+        ObjectOutputStream[] objectWriters = new ObjectOutputStream[validGenres.length];
+
+        for (int i=0;i<objectWriters.length;i++){
+            try{
+                objectWriters[i] = new ObjectOutputStream(new FileOutputStream("Binary/"+validGenres[i]+".ser"));
+            } catch (IOException ioe){ System.out.println("IOEXCEPTION Error");}
+        }
+
+        for (int i=0; i<genreScanners.length;i++){
+            Movie [] movies = new Movie[0];
+            while (genreScanners[i].hasNextLine()){
+                Movie movie = null;
+                try {
+                    movie = parseEntry(genreScanners[i].nextLine());
+                    System.out.println("ADDING TO ARRAY:"+movie);
+                } catch (Exception e){}//All entries at this point are valid
+                movies = addMovie(movies, movie);
+
+            }
+            try {
+                for (Movie movie : movies){
+                    objectWriters[i].writeObject(movie);
+                    System.out.println("PRINTING: "+movie);
+                }
+                objectWriters[i].close();
+            } catch (IOException ioe){System.out.println("IOEXCEPTION IN WRITING");}
+            genreScanners[i].close();
+
+        }
+
+
+
+
+
+
+        String part3_manifest = "BinaryFiles/part3_manifest";
+
+        return part3_manifest;
     }
 
     private static void generateFileNames(){
@@ -184,4 +236,16 @@ public class Driver {
         
         return new Movie(movieAttributes);
     }
+
+    private static Movie[] addMovie(Movie[] movies, Movie movie){
+
+        Movie[] newMovies = new Movie[movies.length+1];
+        int i=0;
+        for (i=0; i<movies.length;i++){
+            newMovies[i] = movies[i];
+        }
+        newMovies[i] = movie;
+        return newMovies;
+    }
 }
+    
