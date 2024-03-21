@@ -1,5 +1,6 @@
 import java.util.Scanner;
 import java.io.FileOutputStream;
+import java.io.PrintWriter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import movieExceptions.*;
@@ -25,13 +26,27 @@ public class Driver {
         //String line = "1990,Total Recall,113,Action,R,7.5,Paul Verhoeven,Ronny Cox,Rachel Ticotin,Marshall Bell,actor 4?";
         // System.out.println(parseEntry(line));
         do_part1(part1_manifest);
-        
+        // try {
+        //     System.out.println(parseEntry("2004,\"I, Robot ,115,Action,PG-13,7.1,Alex Proyas,Will Smith,Bruce Greenwood,Chi McBride"));
+        // } catch (SyntaxException e){ System.out.println(e);}
+        // catch (BadDirectorException e){}
+        // catch (BadDurationException e){}
+        // catch (BadGenreException e){}
+        // catch (BadNameException e){}
+        // catch (BadRatingException e){}
+        // catch (BadScoreException e){}
+        // catch (BadTitleException e){}
+        // catch (BadYearException e){}
         return;
     }
 
     private static String do_part1(String part1_manifest){
         generateFileNames();
-        for (int i=0; i<1; i++){
+        PrintWriter errorWriter = null;
+        try {
+            errorWriter = new PrintWriter(new FileOutputStream("COMP249/Assignment 2/Genres/bad_movie_records.txt"));
+        } catch (FileNotFoundException fnfe){System.out.println("There was an error");}
+        for (int i=0; i<10; i++){
             currentLine = 0;
             generateReadMovies();
             while (readMovies.hasNextLine()){
@@ -39,14 +54,20 @@ public class Driver {
                 String line = readMovies.nextLine();
                 try {
                     Movie movie = parseEntry(line);
-                    System.out.println(movie);
-                } catch (MovieSyntaxException mse){
-                    System.out.println(mse);
-                }
+                    //System.out.println(movie);
+                } catch (SyntaxException se) { errorWriter.println(se);}
+                 catch (BadDirectorException bde){ errorWriter.println(new BadDirectorException(line, fileNames[manifestPointer-1],currentLine));}
+                 catch (BadYearException bde){ errorWriter.println(new BadYearException(line, fileNames[manifestPointer-1],currentLine));}
+                 catch (BadTitleException bde){ errorWriter.println(new BadTitleException(line, fileNames[manifestPointer-1],currentLine));}
+                 catch (BadGenreException bde){ errorWriter.println(new BadGenreException(line, fileNames[manifestPointer-1],currentLine));}
+                 catch (BadScoreException bde){ errorWriter.println(new BadScoreException(line, fileNames[manifestPointer-1],currentLine));}
+                 catch (BadDurationException bde){ errorWriter.println(new BadDurationException(line, fileNames[manifestPointer-1],currentLine));}
+                 catch (BadRatingException bde){ errorWriter.println(new BadRatingException(line, fileNames[manifestPointer-1],currentLine));}
+                 catch (BadNameException bde){ errorWriter.println(new BadNameException(line, fileNames[manifestPointer-1],currentLine));}
             }
         }
-
-
+        
+        errorWriter.close();
 
 
         return "part2_manifest";  
@@ -85,12 +106,13 @@ public class Driver {
 
     }
 
-    private static Movie parseEntry(String entry) throws MovieSyntaxException {
+    private static Movie parseEntry(String entry) throws SyntaxException, BadDirectorException,BadDurationException, BadNameException,BadYearException,BadRatingException,BadScoreException,BadTitleException,BadGenreException {
         String[] splitStringComma = entry.split(",");
         // for (String string : splitStringComma) {
         //     System.out.println(string);
         // }
         int quoteCounter = 0;
+        boolean doubleQuoteFlag = false;
         String quotedEntry = "";
         int index = 0;
         String[] movieAttributes = new String[10];
@@ -99,7 +121,7 @@ public class Driver {
         for (i=0; i<splitStringComma.length; i++){
             //Stop when movieAttributes is filled
             if (index == 10)
-                throw new MovieSyntaxException(entry, fileNames[manifestPointer], currentLine);
+                throw new ExcessFieldsException(entry, fileNames[manifestPointer-1], currentLine);
             //If no quotes
             if (splitStringComma[i].indexOf("\"")==-1 && quoteCounter == 0){
                 movieAttributes[index++] = splitStringComma[i];
@@ -109,12 +131,14 @@ public class Driver {
             //If starting quote only
             } else if (splitStringComma[i].indexOf("\"")==0){
                 quotedEntry = splitStringComma[i].substring(1)+",";
+                doubleQuoteFlag = true;
                 quoteCounter++;
             }
             //If end quote only
             else if (splitStringComma[i].indexOf("\"")==splitStringComma[i].length()-1){
                 quotedEntry += splitStringComma[i].substring(0,splitStringComma[i].length()-1);
                 quoteCounter = 0;
+                doubleQuoteFlag = false;
                 movieAttributes[index++] = quotedEntry;
             }
             //If middle section in quotes between two commas
@@ -123,9 +147,12 @@ public class Driver {
                 quotedEntry += splitStringComma[i]+",";
             }
         }
-        if (index != 10){
-            throw new MovieSyntaxException(entry, "DEBUG", currentLine);
+        if (doubleQuoteFlag)
+            throw new MissingQuotesException(entry, fileNames[manifestPointer-1], currentLine);
+        if (index < 10){
+            throw new MissingFieldsException(entry, fileNames[manifestPointer-1], currentLine);
         }
+        
         return new Movie(movieAttributes);
     }
 }
