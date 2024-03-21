@@ -4,7 +4,7 @@ import movieExceptions.*;
 public class Movie implements Serializable{
     private String year, title, duration, genre, rating, score, director, actor1, actor2, actor3;
     private String[] validRatings  = {"PG","Unrated", "G", "R", "PG-13", "NC-17"};
-    private String[] validGenres = {"musical", "comedy", "animation", "adventure", "drama","crime","biography","horror","action","documentary","fantasy","mystery","sci-fi","family","romance","thirller","western"};
+    private String[] validGenres = {"musical", "comedy", "animation", "adventure", "drama","crime","biography","horror","action","documentary","fantasy","mystery","sci-fi","family","romance","thriller","western"};
 
     public Movie(String year, String title, String duration, String genre, String rating, String score, String director,
             String actor1, String actor2, String actor3) throws BadYearException, BadTitleException, BadDurationException, BadGenreException, BadRatingException, BadScoreException ,BadDirectorException, BadNameException{

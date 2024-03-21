@@ -10,6 +10,8 @@ public class Driver {
     private static String[] fileNames = new String[10];
     private static Scanner readMovies = null;
     private static int currentLine = 0;
+    private static String[] validGenres = {"musical", "comedy", "animation", "adventure", "drama","crime","biography","horror","action","documentary","fantasy","mystery","sci-fi","family","romance","thriller","western"};
+
     public static void main(String[] args){
         
         //part 1's manifest file
@@ -40,20 +42,33 @@ public class Driver {
         return;
     }
 
-    private static String do_part1(String part1_manifest){
+    private static String do_part1(String part1_manifest) {
         generateFileNames();
         PrintWriter errorWriter = null;
+        PrintWriter[] genreWriters = new PrintWriter[17];
+        for (int i=0; i<genreWriters.length;i++){
+            try {
+                genreWriters[i] = new PrintWriter(new FileOutputStream("Genres/"+validGenres[i]+".csv"));
+            } catch (FileNotFoundException fnfe) {System.out.println("There was an error");}
+        }
         try {
-            errorWriter = new PrintWriter(new FileOutputStream("COMP249/Assignment 2/Genres/bad_movie_records.txt"));
+            errorWriter = new PrintWriter(new FileOutputStream("Genres/bad_movie_records.txt"));
         } catch (FileNotFoundException fnfe){System.out.println("There was an error");}
         for (int i=0; i<10; i++){
             currentLine = 0;
             generateReadMovies();
             while (readMovies.hasNextLine()){
                 currentLine++;
+                Movie movie = null;
                 String line = readMovies.nextLine();
                 try {
-                    Movie movie = parseEntry(line);
+                    movie = parseEntry(line);
+                    for (int j=0;j<validGenres.length;j++){
+                        if (validGenres[j].equalsIgnoreCase(movie.getGenre())){
+                            genreWriters[j].println(line);
+                            break;
+                        }
+                     }
                     //System.out.println(movie);
                 } catch (SyntaxException se) { errorWriter.println(se);}
                  catch (BadDirectorException bde){ errorWriter.println(new BadDirectorException(line, fileNames[manifestPointer-1],currentLine));}
@@ -64,20 +79,34 @@ public class Driver {
                  catch (BadDurationException bde){ errorWriter.println(new BadDurationException(line, fileNames[manifestPointer-1],currentLine));}
                  catch (BadRatingException bde){ errorWriter.println(new BadRatingException(line, fileNames[manifestPointer-1],currentLine));}
                  catch (BadNameException bde){ errorWriter.println(new BadNameException(line, fileNames[manifestPointer-1],currentLine));}
+
+                 
             }
         }
         
         errorWriter.close();
-
-
-        return "part2_manifest";  
+        for (PrintWriter printWriter : genreWriters) {
+            printWriter.flush();
+            printWriter.close();
+        }
+        
+        PrintWriter manifestWriter = null;
+        String part2_manifest = "Genres/part2_manifest.txt";
+        try{
+            manifestWriter = new PrintWriter(new FileOutputStream(part2_manifest));
+        } catch (FileNotFoundException fnfe) {System.out.println("There was an error");}
+        for (String genre : validGenres) {
+            manifestWriter.println(genre+".csv");
+        }
+        manifestWriter.close();
+        return part2_manifest;  
     }
 
     private static void generateFileNames(){
         Scanner readManifest = null;
  
         try {
-            readManifest = new Scanner(new FileInputStream("COMP249/Assignment 2/Movies/part1_manifest.txt"));
+            readManifest = new Scanner(new FileInputStream("Movies/part1_manifest.txt"));
         } catch (FileNotFoundException fnfe){
             System.out.println("File not found, ending program");
             System.exit(0);
@@ -97,7 +126,7 @@ public class Driver {
     private static void generateReadMovies(){
         System.out.println("readMovies currently pointing to: "+fileNames[manifestPointer]);
         try {
-            readMovies = new Scanner(new FileInputStream("COMP249/Assignment 2/Movies/"+fileNames[manifestPointer++]));
+            readMovies = new Scanner(new FileInputStream("Movies/"+fileNames[manifestPointer++]));
         } catch (FileNotFoundException fnfe){
             System.out.println("File not found, exiting");
             System.exit(0);
