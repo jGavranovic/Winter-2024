@@ -128,7 +128,7 @@ public class Driver {
                 Movie movie = null;
                 try {
                     movie = parseEntry(genreScanners[i].nextLine());
-                    System.out.println("ADDING TO ARRAY:"+movie);
+                    // System.out.println("ADDING TO ARRAY:"+movie);
                 } catch (Exception e){}//All entries at this point are valid
                 movies = addMovie(movies, movie);
 
@@ -136,7 +136,7 @@ public class Driver {
             try {
                 for (Movie movie : movies){
                     objectWriters[i].writeObject(movie);
-                    System.out.println("PRINTING: "+movie);
+                    // System.out.println("PRINTING: "+movie);
                 }
                 objectWriters[i].close();
             } catch (IOException ioe){System.out.println("IOEXCEPTION IN WRITING");}
