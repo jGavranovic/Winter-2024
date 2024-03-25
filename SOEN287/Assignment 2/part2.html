@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>JavaScript Arrays</h1>
+
+    <h2>Print the elements of an array using toString()</h2>
+    <p id="target1"></p>
+
+    <h2>Print the elemnts of an array using join()</h2>
+    <p id="target2"></p>
+
+    <h2>Print the lements of an array in the format of index: value</h2>
+    <p id="target3"></p>
+    <script>
+        const fruits = ["Banana","Orange","Apple","Mango"];
+
+        fruits.forEach((fruit) => document.getElementById("target1").innerHTML += fruit.toString()+",");
+
+        document.getElementById("target2").innerHTML = fruits.join("&");
+        
+        for (i=0;i<fruits.length;i++)
+            document.getElementById("target3").innerHTML += i+": " + fruits[i]+"<br>";
+        
+
+    </script>
+</body>
+</html>
