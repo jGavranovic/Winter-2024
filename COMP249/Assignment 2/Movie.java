@@ -1,3 +1,9 @@
+/*
+ * This is a class to create Movie obecjts
+ * 
+ * 
+ */
+
 import java.io.Serializable;
 import movieExceptions.*;
 

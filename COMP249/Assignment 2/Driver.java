@@ -1,9 +1,15 @@
+// -------------------------------------------------
+// Assignment 2
+// Question 1
+// Written by Jovan Gavranovic (40282175)
+// -------------------------------------------------
 import java.util.Scanner;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.ObjectOutputStream;
+import java.io.ObjectInputStream;
 import java.io.IOException;
 import movieExceptions.*;
 
@@ -13,7 +19,7 @@ public class Driver {
     private static Scanner readMovies = null;
     private static int currentLine = 0;
     private static String[] validGenres = {"musical", "comedy", "animation", "adventure", "drama","crime","biography","horror","action","documentary","fantasy","mystery","sci-fi","family","romance","thriller","western"};
-
+    private static Movie[][] all_movies = null;
     public static void main(String[] args){
         
         //part 1's manifest file
@@ -25,21 +31,13 @@ public class Driver {
         //part 3's manifest file
         String part3_manifest = do_part2(part2_manifest );
 
-        //do_part3();
+        do_part3(part3_manifest);
 
-        //String line = "1990,Total Recall,113,Action,R,7.5,Paul Verhoeven,Ronny Cox,Rachel Ticotin,Marshall Bell,actor 4?";
-        // System.out.println(parseEntry(line));
-        // try {
-        //     System.out.println(parseEntry("2004,\"I, Robot ,115,Action,PG-13,7.1,Alex Proyas,Will Smith,Bruce Greenwood,Chi McBride"));
-        // } catch (SyntaxException e){ System.out.println(e);}
-        // catch (BadDirectorException e){}
-        // catch (BadDurationException e){}
-        // catch (BadGenreException e){}
-        // catch (BadNameException e){}
-        // catch (BadRatingException e){}
-        // catch (BadScoreException e){}
-        // catch (BadTitleException e){}
-        // catch (BadYearException e){}
+        System.out.println("-----------------------------");
+        System.out.println("Welcome to the movie database");
+        System.out.println("-----by: Jovan Gavranovic----");
+
+        navigate();
         return;
     }
 
@@ -104,7 +102,17 @@ public class Driver {
     }
 
     private static String do_part2(String part2_manifest){
-        manifestPointer = 0;
+
+        String part3_manifest = "Binary/part3_manifest.txt";
+        PrintWriter manifestWriter = null;
+        try {manifestWriter = new PrintWriter(new FileOutputStream(part3_manifest));}
+        catch (Exception e){ System.out.println("There was an error");}
+
+        for (String genre : validGenres) {
+            manifestWriter.println(genre+".ser");
+        }
+        manifestWriter.close();
+
         Scanner[] genreScanners = new Scanner[validGenres.length];
 
         for (int i=0;i<genreScanners.length;i++){
@@ -134,10 +142,11 @@ public class Driver {
 
             }
             try {
-                for (Movie movie : movies){
-                    objectWriters[i].writeObject(movie);
-                    // System.out.println("PRINTING: "+movie);
-                }
+                // for (Movie movie : movies){
+                //     objectWriters[i].writeObject(movie);
+                //     // System.out.println("PRINTING: "+movie);
+                // }
+                objectWriters[i].writeObject(movies);
                 objectWriters[i].close();
             } catch (IOException ioe){System.out.println("IOEXCEPTION IN WRITING");}
             genreScanners[i].close();
@@ -149,9 +158,50 @@ public class Driver {
 
 
 
-        String part3_manifest = "BinaryFiles/part3_manifest";
+       
 
         return part3_manifest;
+    }
+
+    private static void do_part3(String part3_manifest){
+        Scanner manifestReader = null;
+        try {
+            manifestReader = new Scanner(new FileInputStream(part3_manifest));
+        } catch (FileNotFoundException fnfe) {System.out.println("There was an error - exiting.");}
+        int genreCount=0;
+        while (manifestReader.hasNextLine()){
+            manifestReader.nextLine();
+            genreCount++;
+        } manifestReader.close();
+        try {
+            manifestReader = new Scanner(new FileInputStream(part3_manifest));
+        } catch (FileNotFoundException fnfe) {System.out.println("There was an error - exiting.");}
+
+        ObjectInputStream[] objectReaders = new ObjectInputStream[genreCount];
+        for (int i=0;i<objectReaders.length;i++){
+            try {
+                objectReaders[i] = new ObjectInputStream(new FileInputStream("Binary/"+manifestReader.nextLine()));
+            } catch (IOException ioe){System.out.println("IOEXCEPTION while reading files");}
+        } manifestReader.close();
+
+        all_movies = new Movie[genreCount][];
+
+        for (int i=0; i<genreCount; i++){
+            try {
+                all_movies[i] = (Movie[])objectReaders[i].readObject();
+                objectReaders[i].close();
+            } catch (Exception ioe){System.out.println("Error reading object from binary file");}
+        }
+
+        // for (Movie[] movies : all_movies) {
+        //     for (Movie movies2 : movies) {
+        //         System.out.println(movies2);
+        //     }
+        // }
+
+
+
+
     }
 
     private static void generateFileNames(){
@@ -169,14 +219,14 @@ public class Driver {
         }
 
         readManifest.close();
-        System.out.println("Filenames: ");
-        for (String string : fileNames) {
-            System.out.println(string);
-        }
+        // System.out.println("Filenames: ");
+        // for (String string : fileNames) {
+        //     System.out.println(string);
+        // }
     }
 
     private static void generateReadMovies(){
-        System.out.println("readMovies currently pointing to: "+fileNames[manifestPointer]);
+        //System.out.println("readMovies currently pointing to: "+fileNames[manifestPointer]);
         try {
             readMovies = new Scanner(new FileInputStream("Movies/"+fileNames[manifestPointer++]));
         } catch (FileNotFoundException fnfe){
@@ -247,5 +297,89 @@ public class Driver {
         newMovies[i] = movie;
         return newMovies;
     }
+
+    private static void navigate(){
+        Scanner input = new Scanner(System.in);
+        String choice;
+        int choiceInt;
+        int genrePointer = 0;
+        int[] moviePointers = new int[17];
+        for (int i=0;i<moviePointers.length;i++)
+            moviePointers[i] = 0;
+        
+        while (true){
+            System.out.println("-----------------------------");
+            System.out.println("          Main Menu");
+            System.out.println("-----------------------------");
+            System.out.println("  s Select a movie array to navigate");
+            System.out.println("  n Navigate "+validGenres[genrePointer]+" movies ("+all_movies[genrePointer].length+" records)");
+            System.out.println("  x Exit");
+            System.out.println("-----------------------------\n");
+            System.out.print("Enter your choice: ");
+            
+            choice = input.nextLine().toLowerCase();
+
+            switch (choice){
+                case "s":
+                    System.out.println("-----------------------------");
+                    System.out.println("       Genre Sub-Menu");
+                    System.out.println("-----------------------------");
+                    int i=0;
+                    for(; i<validGenres.length;i++){
+                        System.out.printf("%-15s%15s",(i+1)+" "+validGenres[i],"("+all_movies[i].length+" movies)\n");
+                    } System.out.println((i+1)+" Exit");
+
+                    System.out.print(" Enter your choice: ");
+                    choice = input.nextLine();
+                    // if (choice.equals(i+1)) continue;
+                    try {
+                        choiceInt = Integer.parseInt(choice);
+                    } catch (NumberFormatException nfe) {System.out.println("Invlaid input"); continue;}
+
+                    if (choiceInt >0 && choiceInt<i+1) genrePointer = choiceInt-1; break;
+
+
+                    case "n":
+                        while (true) {
+                                
+                            System.out.println("Navigating "+validGenres[genrePointer]+" movies ("+all_movies[genrePointer].length+")");
+                            System.out.print("Enter your choice: ");
+                            choiceInt = Integer.parseInt(input.nextLine());
+
+                            if (all_movies[genrePointer].length == 0){
+                                break;
+                            }
+                            if (choiceInt == 0){
+                                break;
+                            } else if (choiceInt > 0){
+                                boolean eof = moviePointers[genrePointer]+choiceInt>all_movies[genrePointer].length;
+                                int max = (eof)?all_movies[genrePointer].length-moviePointers[genrePointer]:choiceInt;
+                                for (i=0; i<max;i++)
+                                    System.out.println(all_movies[genrePointer][moviePointers[genrePointer]+i]);
+                                if (eof)
+                                    System.out.println("EOF has been reached");
+                                moviePointers[genrePointer] += max-1;
+                            } else {
+                                boolean bof = moviePointers[genrePointer]+choiceInt<-1;
+                                int max = (bof)?moviePointers[genrePointer]+1:Math.abs(choiceInt);
+                                
+                                for (i=0; i<max;i++){
+                                    System.out.println(all_movies[genrePointer][moviePointers[genrePointer]-i]);
+                                }
+
+                                if(bof)
+                                    System.out.println("BOF has been reached");
+                                moviePointers[genrePointer] -= max - 1;
+                            }
+                        }
+                        break;
+                    case "x":
+                        input.close();
+                        System.out.println("Exiting program - thank you");
+                        System.exit(0);
+            }
+
+        }
+    }
 }
-    
+   
