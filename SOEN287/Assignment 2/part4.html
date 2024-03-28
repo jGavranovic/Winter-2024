@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Part 4</title>
+    <style>
+        th {
+            text-align: center;
+        }
+
+        input[type="text"]{
+            width: 35px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Order books online</h1>
+        <fieldset>
+        <table>
+            <tr>
+                <th>Book</th>
+                <th>Quantity</th>
+                <th>Price</th>
+            </tr>
+            <tr>
+                <td><label for="webprog">Basic Web Programming</label></td>
+                <td><input type="text" id="webprog"></td>
+                <td>$19.99</td>
+            </tr>
+            <tr>
+                <td><label for="php">Into to PHP</label></td>
+                <td><input type="text" id="php"></td>
+                <td>$86.00</td>
+            </tr>
+            <tr>
+                <td><label for="jquery">Advanced JQuery</label></td>
+                <td><input type="text" id="jquery"></td>
+                <td>$55.00</td>
+            </tr>
+        </table><br>
+        <button onclick="calculateOrder()">Calculate the order</button>
+        </fieldset>
+        <p id="webOutput"></p>
+        <p id="phpOutput"></p>
+        <p id="jqueryOutput"></p>
+        <p id="totalOutput"></p>
+        <script src="part4.js"></script>
+</body>
+</html>
