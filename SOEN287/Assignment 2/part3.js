@@ -5,6 +5,12 @@ function addNumbers(nums) {
 }
 
 function findMaxNumber() {
+    let max = arguments[0];
+    for (i=0;i<arguments.length;i++){
+        if (arguments[i]>max)
+            max = arguments[i];
+    }
+    return max;
 
 }
 
@@ -43,6 +49,8 @@ function getCurrentDate(){
 }
 
 document.getElementById("addnums").innerHTML = "addNumbers([1,5,-2,7]) = "+addNumbers([1,5,-2,7]);
+
+document.getElementById("findmax").innerHTML = "findMaxNumber(1,5,-2,7) = "+findMaxNumber(1,5,-2,7);
 
 document.getElementById("addOnlyNum").innerHTML = "addOnlyNumbers([4,5,\"3.0 birds\", true, \"birds2\"]) = "+ addOnlyNumbers([4,5,"3.0 birds", true, "birds2"]);
 

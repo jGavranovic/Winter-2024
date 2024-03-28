@@ -3,6 +3,7 @@
 // Question 1
 // Written by Jovan Gavranovic (40282175)
 // -------------------------------------------------
+
 import java.util.Scanner;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
@@ -12,7 +13,13 @@ import java.io.ObjectOutputStream;
 import java.io.ObjectInputStream;
 import java.io.IOException;
 import movieExceptions.*;
-
+    /**
+     * <pre>This class is the main driver for the assignment.
+     * It does reorganizes all the movie entries into genre-based text files (part1).
+     * It compiles each genre file into a array of movies and serialized the array (part2)
+     * And desirilizes the arrays, compiling them in a larger array which the user can navigate (part3)
+     * </pre>
+     */
 public class Driver {
     private static int manifestPointer = 0;
     private static String[] fileNames = new String[10];
@@ -20,6 +27,10 @@ public class Driver {
     private static int currentLine = 0;
     private static String[] validGenres = {"musical", "comedy", "animation", "adventure", "drama","crime","biography","horror","action","documentary","fantasy","mystery","sci-fi","family","romance","thriller","western"};
     private static Movie[][] all_movies = null;
+    
+    /** 
+     * @param args
+     */
     public static void main(String[] args){
         
         //part 1's manifest file
@@ -41,6 +52,11 @@ public class Driver {
         return;
     }
 
+    
+    /** 
+     * @param part1_manifest
+     * @return String
+     */
     private static String do_part1(String part1_manifest) {
         generateFileNames();
         PrintWriter errorWriter = null;
@@ -344,7 +360,9 @@ public class Driver {
                                 
                             System.out.println("Navigating "+validGenres[genrePointer]+" movies ("+all_movies[genrePointer].length+")");
                             System.out.print("Enter your choice: ");
+                            try{
                             choiceInt = Integer.parseInt(input.nextLine());
+                            } catch (NumberFormatException nfe){break;};
 
                             if (all_movies[genrePointer].length == 0){
                                 break;

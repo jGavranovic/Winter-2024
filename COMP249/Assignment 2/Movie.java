@@ -1,11 +1,21 @@
-/*
- * This is a class to create Movie obecjts
- * 
- * 
- */
+// -------------------------------------------------
+// Assignment 2
+// Question 1
+// Written by Jovan Gavranovic (40282175)
+// -------------------------------------------------
 
 import java.io.Serializable;
 import movieExceptions.*;
+
+/**
+ * <pre>
+ *  This class is a framework for movie objects. 
+ *  Includes the 10 attributes, valid ratings, and valid genres
+ *  It's constructor will also ensure that all the attributes have valid values when an object is instantialized
+ * 
+ * 
+ * </pre>
+ */
 
 public class Movie implements Serializable{
     private String year, title, duration, genre, rating, score, director, actor1, actor2, actor3;
@@ -60,10 +70,18 @@ public class Movie implements Serializable{
         this(attributes[0], attributes[1], attributes[2], attributes[3], attributes[4],attributes[5],attributes[6],attributes[7],attributes[8],attributes[9]);
     }
     
+    
+    /** 
+     * @return String
+     */
     public String getYear(){
         return this.year;
     }
 
+    
+    /** 
+     * @param year
+     */
     public void setYear(String year){
         this.year = year;
     }
