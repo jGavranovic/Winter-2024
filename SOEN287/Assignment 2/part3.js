@@ -22,10 +22,7 @@ function addOnlyNumbers(list){
 
 function getDigits(string){
     let output = "";
-    for (i=0; i<string.length;i++){
-        if (string.substring(i,i+1).match(/\d/) != null)
-            output+=string.substring(i,i+1);
-    }
+    string.match(/\d/g).forEach((num) => output+=num);
     return output;
 }
 
