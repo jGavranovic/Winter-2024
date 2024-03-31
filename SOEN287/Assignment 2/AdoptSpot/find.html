@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>AdoptSpot - Search</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="header">
+        <table>
+            <tr>
+                <td>
+                    <h1>AdoptSpot</h1>
+                </td>
+                <td><a href="index.html"><img src="images/logo.png" class="logo"
+                            alt="Paws icon credit to flaticon.com"></a></td>
+            </tr>
+        </table>
+        <h2 id="date"></h2>
+    </div>
+    <div class="center">
+        <div class="menu">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="browse.html">Browse Available Pets</a></li>
+                <li><a href="find.html" class="active">Find a dog/cat</a></li>
+                <li><a href="dog-care.html">Dog Care</a></li>
+                <li><a href="cat-care.html">Cat Care</a></li>
+                <li><a href="giveaway.html">Have a pet to give away</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+        </div>
+        <div class="content">
+            <h1>Find a Pet</h1>
+            <p>In order to find the pet that you want, please fill in the form below!</p>
+            <form id="petSearch" method="post" onsubmit="return validateSearch(this)" name="petSearch">
+                <fieldset>
+                    <legend>Pet search form</legend>
+
+                    <label>Species: </label>
+                    <input type="radio" name="species" id="speciesDog" value="dog" required>
+                    <label for="speciesDog">Dog</label>
+                    <input type="radio" name="species" id="speciesCat" value="cat">
+                    <label for="speciesCat">Cat</label><br><br>
+
+                    <label for="breed">Breed:</label>
+                    <input type="text" name="breed" id="breed">
+                    <input type="checkbox" name="breed" id="dontCareBreed" value="dontCare">
+                    <label for="dontCareBreed">No preference</label><br><br>
+
+                    <label for="age">Preferred age: </label>
+                    <select name="age" id="age">
+                        <option value="0to1">0-1 years old</option>
+                        <option value="2to5">2-5 years old</option>
+                        <option value="6to10">6 to 10 years old</option>
+                        <option value="11plus">11+ years old</option>
+                    </select><br><br>
+
+                    <label>Preferred sex: </label>
+                    <input type="radio" id="male" value="male" name="sex" required>
+                    <label for="male">Male</label>
+                    <input type="radio" name="sex" id="female" value="female">
+                    <label for="female">Female</label>
+                    <input type="radio" name="sex" id="dontCareSex" value="dontCareSex">
+                    <label for="dontCareSex">No preference</label><br><br>
+
+                    <label>Must get along with: </label>
+                    <input type="checkbox" name="getAlong[]" id="getAlongDog" value="yes">
+                    <label for="getAlongDog">Dog</label>
+                    <input type="checkbox" name="getAlong[]" id="getAlongCat" value="yes">
+                    <label for="getAlongCat">Cat</label>
+                    <input type="checkbox" name="getAlong[]" id="getAlongChildren" value="yes">
+                    <label for="getAlongChildren">Small children</label><br><br>
+
+                    <button type="submit" form="petSearch">Search!</button>
+                    <button type="reset" form="petSearch">Clear</button>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+    <div class="footer">
+        <p><a href="privacy.html">Privacy/Disclaimer Statement</a></p>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>

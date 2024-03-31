@@ -1,0 +1,201 @@
+    html,body {
+    margin: 0;
+    padding: 0;
+}
+body {
+    background-color: #57cc99;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+.menu, .header {
+    background-color: #c7f9cc;
+    border: 2px solid #677bee;
+    margin: 3px;
+}
+.logo {
+    width: 100px;
+    padding-left: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu {
+    padding-right: 0px;
+}
+.center {
+    display: flex;
+    flex-direction: row;
+    flex-grow:1;
+}
+
+.menu a {
+    display: block;
+    width: 250px;
+    padding: 8px 20px;
+    font-size: larger;
+}
+
+.menu a:hover {
+    color: #C7F9CC;
+    background-color: #22577A;
+}
+
+a {
+    text-decoration: none;
+    color: #22577A;
+}
+.menu a.active {
+    background-color: #38A3A5;
+    color: black;
+}
+.content {
+    margin-right: 50px;
+    flex-grow: 1;
+    padding-left: 50px;
+}
+.content h1 {
+    text-align: center;
+    display: block;
+}
+
+.content h2 {
+    padding-top: 50px;
+}
+
+.content ul li{
+    padding: 6px 0px;
+}
+
+.content ul {
+    padding: 0;
+    list-style-type: square;
+}
+
+.footer {
+    background-color: #343a40;
+    width: 100vw;
+    text-align: center;
+    margin-top: auto;
+}
+
+.footer a {
+    color: white;
+}
+
+
+.image-audio img {
+    height: 60vh;
+}
+
+.image-audio audio {
+    flex-grow: 1;
+}
+
+.image-audio{
+    float: right;
+    padding-right: 100px;
+    display: flex;
+    flex-direction: column;
+    padding-top: 25px;
+}
+
+/* BROWSE PAGE ------------------------------------*/
+
+.construction-image {
+    width: 30%;
+    display: flex;
+    margin-left: 35%;
+}
+
+.petoffers {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.offer img {
+    max-width: 250px;
+    max-height: 300px;
+}
+
+.offer{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.offer button {
+    display: block;
+    /* margin-left: auto;
+    margin-right: auto; */
+    width: 100%;
+}
+
+/*Search page--------------------------------------*/
+
+fieldset {
+    border: 2px #38A3A5 solid;
+}
+
+legend {
+    font-size: large;
+}
+
+form {
+    flex-grow: 0;
+}
+
+/* Dog/Cat care pages --------------------------------*/
+.content ol {
+    font-size: xx-large;
+    padding-left: 20px;
+}
+
+.content ol li{
+    padding-top: 20px;
+}
+
+.content ol li ul {
+    font-size: 17px;
+    padding-left: 50px;
+}
+
+
+/*Donation page   ----------------------------*/
+
+.comments {
+    display: flex;
+}
+
+/* Contact ----------------------*/
+
+.info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 30px;
+}
+.info p{
+    display: inline-block;
+    padding-right: 100px;
+    font-size: large;
+    font-weight: bold;
+    text-align: right;
+
+}
+
+.info img {
+    display: inline-block;
+    border-radius: 50%;
+    max-width: 200px;
+}
+

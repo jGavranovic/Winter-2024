@@ -1,7 +1,7 @@
 const webProgPrice = 19.99;
 const phpPrice = 86;
 const jqueryPrice = 55;
-const number = new RegExp(/^\d+$/);
+const number = new RegExp(/^\d+$/); //regex for int
 
 function calculateOrder(){
 

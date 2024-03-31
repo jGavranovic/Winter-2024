@@ -53,6 +53,6 @@ document.getElementById("addOnlyNum").innerHTML = "addOnlyNumbers([4,5,\"3.0 bir
 
 document.getElementById("getDigits").innerHTML = "getDigits(\"h5dm-19n6\") = " + getDigits("h5dm-19n6");
 
-document.getElementById("reverseString").innerHTML = "reveseString(\"element\") = "+reverseString("element");
+document.getElementById("reverseString").innerHTML = "reverseString(\"element\") = "+reverseString("element");
 
 document.getElementById("date").innerHTML = getCurrentDate();
