@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>AdoptSpot - Browse</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <%- include('includes/header.ejs') -%>
+    <div class="center">
+        <div class="menu">
+            <ul>
+                <li><a href="/" >Home</a></li>
+                <li><a href="browse" class="active">Browse Available Pets</a></li>
+                <li><a href="find">Find a dog/cat</a></li>
+                <li><a href="dog-care">Dog Care</a></li>
+                <li><a href="cat-care">Cat Care</a></li>
+                <li><a href="giveaway">Have a pet to give away</a></li>
+                <li><a href="contact">Contact Us</a></li>
+            </ul>
+        </div>
+        <div class="content">
+            <h1>Available pets</h1>
+            <div class="petoffers">
+
+                <div class="offer">
+                    <img src="images/cat1.jpg" alt="">
+                    <div>
+                        <button>Interested</button>
+                        <p>
+                            <b>Name:</b> <em>Whiskers</em><br>
+                            <b>Sex:</b> <em>Male</em><br>
+                            <b>Age:</b> <em>2 years old</em><br>
+                            <b>Breed:</b> <em>Domestic shorthair</em><br>
+                            <b>Gets along with </b><em>Children</em><br>
+                            Loves to sit by the window!
+                        </p>
+                    </div>
+                </div>
+                <div class="offer">
+                    <img src="images/dog1.jpg" alt="">
+                    <div>
+                        <button>Interested</button>
+                        <p>
+                            <b>Name:</b> <em>Buddy</em><br>
+                            <b>Sex:</b> <em>Male</em><br>
+                            <b>Age:</b> <em>3 years old</em><br>
+                            <b>Breed:</b> <em>German Sheppard</em><br>
+                            <b>Gets along with</b><em> People</em><br>
+                            Cannot stop running!
+                        </p>
+                    </div>
+                </div>
+                <div class="offer">
+                    <img src="images/cat2.avif" alt="">
+                    <div>
+                        <button>Interested</button>
+                        <p>
+                            <b>Name:</b> <em>Luna</em><br>
+                            <b>Sex:</b> <em>Female</em><br>
+                            <b>Age:</b> <em>1 year old</em><br>
+                            <b>Breed:</b> <em>American shorthair</em><br>
+                            <b>Gets along with</b><em> Pets</em><br>
+                            Outdoor cat
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <%- include('includes/footer.ejs') -%>
+    <script src="script.js"></script>
+</body>
+
+</html>

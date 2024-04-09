@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>AdoptSpot - Giveaway</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <%- include('includes/header.ejs') -%>
+    <div class="center">
+        <div class="menu">
+            <ul>
+                <li><a href="/" >Home</a></li>
+                <li><a href="browse">Browse Available Pets</a></li>
+                <li><a href="find">Find a dog/cat</a></li>
+                <li><a href="dog-care">Dog Care</a></li>
+                <li><a href="cat-care">Cat Care</a></li>
+                <li><a href="giveaway" class="active">Have a pet to give away</a></li>
+                <li><a href="contact">Contact Us</a></li>
+            </ul>
+        </div>
+        <div class="content">
+            <h1>Donate a pet</h1>
+            <p>In order to find a good home for your pet, please fill in the form below!</p>
+            <form id="petDonate" method="post" onsubmit="return validateSubmit(this)">
+                <fieldset>
+                    <legend>Pet donation form</legend>
+
+                    <label>Species: </label>
+                    <input type="radio" name="species" id="speciesDog" value="dog" required>
+                    <label for="speciesDog">Dog</label>
+                    <input type="radio" name="species" id="speciesCat" value="cat">
+                    <label for="speciesCat">Cat</label><br><br>
+
+                    <label for="breed">Breed:</label>
+                    <input type="text" name="breed" id="breed">
+                    <input type="checkbox" name="breed" id="mixed" value="yes">
+                    <label for="mixed">Mixed</label><br><br>
+
+                    <label for="age">Age: </label>
+                    <select name="age" id="age">
+                        <option value="0to1">0-1 years old</option>
+                        <option value="2to5">2-5 years old</option>
+                        <option value="6to10">6 to 10 years old</option>
+                        <option value="11plus">11+ years old</option>
+                    </select><br><br>
+
+                    <label>Sex: </label>
+                    <input type="radio" id="male" value="male" name="sex" required>
+                    <label for="male">Male</label>
+                    <input type="radio" name="sex" id="female" value="female">
+                    <label for="female">Female</label>
+                    <input type="radio" name="sex" id="dontCareSex" value="dontCareSex">
+                    <label for="dontCareSex">No preference</label><br><br>
+
+                    <label>Gets along with: </label>
+                    <input type="checkbox" name="getAlong[]" id="getAlongDog" value="yes">
+                    <label for="getAlongDog">Dog</label>
+                    <input type="checkbox" name="getAlong[]" id="getAlongCat" value="yes">
+                    <label for="getAlongCat">Cat</label>
+                    <input type="checkbox" name="getAlong[]" id="getAlongChildren" value="yes">
+                    <label for="getAlongChildren">Small children</label><br><br>
+
+                    <div class="comments">
+                        <label for="comments">Extra comments: </label>
+                        <textarea name="comments" id="comments" cols="30" rows="3"></textarea>
+                    </div><br>
+
+                    <label for="ownerName">Your name (First Last): </label>
+                    <input type="text" id="ownerName" name="ownerName" required><br><br>
+
+                    <label for="email">Email: </label>
+                    <input type="email" id="email" name="email" required><br><br>
+                    
+                    <button type="submit" form="petDonate">Search!</button>
+                    <button type="reset" form="petDonate">Clear</button>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+    <%- include('includes/footer.ejs') -%>
+    <script src="script.js"></script>
+</body>
+
+</html>

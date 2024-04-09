@@ -1,13 +1,15 @@
 const express = require('express');
 const app = express();
 
-
 app.set("view engine", "ejs")
 
 app.get("/", (req,res) => {
-    res.render('part1', {ans : find4Digits("1 5 13 4232 43")})
+    res.render('part1')
 })
-
+app.post("/", (req,res) => {
+    res.write("fat32")
+    res.end();
+})
 app.listen(3000, () => {
     console.log("Server started at http://localhost:3000");
 })
@@ -68,6 +70,6 @@ function find4Digits(string){
             return nums[i];
     }
 
-    return -1;
+    return false;
 
 }
