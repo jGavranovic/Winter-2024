@@ -13,18 +13,22 @@
         <div class="menu">
             <ul>
                 <li><a href="/" >Home</a></li>
-                <li><a href="browse">Browse Available Pets</a></li>
+                <!-- <li><a href="browse">Browse Available Pets</a></li> -->
                 <li><a href="find" class="active">Find a dog/cat</a></li>
                 <li><a href="dog-care">Dog Care</a></li>
                 <li><a href="cat-care">Cat Care</a></li>
+                <li><a href="createaccount">Create Account</a></li>
                 <li><a href="giveaway">Have a pet to give away</a></li>
                 <li><a href="contact">Contact Us</a></li>
+                <% if (typeof authenticated !== 'undefined' && authenticated) {%>
+                    <li><a href="logout">Logout</a></li>
+                    <% } %>
             </ul>
         </div>
         <div class="content">
             <h1>Find a Pet</h1>
             <p>In order to find the pet that you want, please fill in the form below!</p>
-            <form id="petSearch" method="post" onsubmit="return validateSearch(this)" name="petSearch">
+            <form id="petSearch" method="GET" onsubmit="return validateSearch(this)" action='/browse' name="petSearch">
                 <fieldset>
                     <legend>Pet search form</legend>
 
@@ -56,11 +60,11 @@
                     <label for="dontCareSex">No preference</label><br><br>
 
                     <label>Must get along with: </label>
-                    <input type="checkbox" name="getAlong[]" id="getAlongDog" value="yes">
+                    <input type="checkbox" name="getsAlong[]" id="getAlongDog" value="dogs">
                     <label for="getAlongDog">Dog</label>
-                    <input type="checkbox" name="getAlong[]" id="getAlongCat" value="yes">
+                    <input type="checkbox" name="getsAlong[]" id="getAlongCat" value="cats">
                     <label for="getAlongCat">Cat</label>
-                    <input type="checkbox" name="getAlong[]" id="getAlongChildren" value="yes">
+                    <input type="checkbox" name="getsAlong[]" id="getAlongChildren" value="children">
                     <label for="getAlongChildren">Small children</label><br><br>
 
                     <button type="submit" form="petSearch">Search!</button>
@@ -70,7 +74,7 @@
         </div>
     </div>
     <%- include('includes/footer.ejs') -%>
-    <script src="script.js"></script>
+    <script src="scripts/script.js"></script>
 </body>
 
 </html>

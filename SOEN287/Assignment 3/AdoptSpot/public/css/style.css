@@ -123,15 +123,23 @@ a {
     flex-wrap: wrap;
 }
 
-.offer img {
-    max-width: 250px;
-    max-height: 300px;
+.offer p {
+    text-align: center;
 }
 
 .offer{
+    width: 200px;
+    height: 200px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-around;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    margin: 50px 50px;
+    background-color: #55c293;
+}
+.offer:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 .offer button {
     display: block;
@@ -199,3 +207,12 @@ form {
     max-width: 200px;
 }
 
+.alert {
+    color: red;
+    font-weight: bolder;
+}
+
+.success {
+    color: blue;
+    font-weight: bolder;
+}

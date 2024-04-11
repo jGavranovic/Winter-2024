@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>AdoptSpot - Giveaway</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <%- include('includes/header.ejs') -%>
+    <div class="center">
+        <div class="menu">
+            <ul>
+                <li><a href="/" >Home</a></li>
+                <!-- <li><a href="browse">Browse Available Pets</a></li> -->
+                <li><a href="find">Find a dog/cat</a></li>
+                <li><a href="dog-care">Dog Care</a></li>
+                <li><a href="cat-care">Cat Care</a></li>
+                <li><a href="createaccount">Create Account</a></li>
+                <li><a href="giveaway" class="active">Have a pet to give away</a></li>
+                <li><a href="contact">Contact Us</a></li>
+                <% if (typeof authenticated !== 'undefined' && authenticated) {%>
+                    <li><a href="logout">Logout</a></li>
+                    <% } %>
+            </ul>
+        </div>
+        <div class="content">
+            <h1>Login</h1>
+            <form action="/authenticate" method="POST" onsubmit="return validAccountCreation(this)">
+                <label for="username">Username: </label>
+                <input type="text" id="username" name="username" required><br><br>
+                <label for="password">Password: </label>
+                <input type="password" id="password" name="password" required><br><br>
+                <input type="submit" value="Submit"><br><br><% if (taken) {%> <span class="alert">INVALID LOGIN, TRY AGAIN</span><%}%>
+            </form>
+        </div>
+    </div>
+    <%- include('includes/footer.ejs') -%>
+    <script src="scripts/script.js"></script>
+</body>
+
+</html>

@@ -48,3 +48,16 @@ function validateSubmit(form){
         return true;
     }
 }
+
+function validAccountCreation(form){
+    const usernameRegex = /^[A-Za-z0-9]+$/
+    const passwordRegex = /^(?=.*[0-9])(?=.*[A-Za-z])[A-Za-z0-9]{4,}$/
+
+
+    if (usernameRegex.test(form.username.value) && passwordRegex.test(form.password.value))
+        return true;
+    else {
+        alert('Invalid username or password');
+        return false;
+    }
+}

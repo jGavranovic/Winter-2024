@@ -15,12 +15,16 @@
         <div class="menu">
             <ul>
                 <li><a href="/" >Home</a></li>
-                <li><a href="browse">Browse Available Pets</a></li>
+                <!-- <li><a href="browse">Browse Available Pets</a></li> -->
                 <li><a href="find">Find a dog/cat</a></li>
                 <li><a href="dog-care" class="active">Dog Care</a></li>
                 <li><a href="cat-care">Cat Care</a></li>
+                <li><a href="createaccount">Create Account</a></li>
                 <li><a href="giveaway">Have a pet to give away</a></li>
                 <li><a href="contact">Contact Us</a></li>
+                <% if (typeof authenticated !== 'undefined' && authenticated) {%>
+                    <li><a href="logout">Logout</a></li>
+                    <% } %>
             </ul>
         </div>
         <div class="content">
@@ -76,7 +80,7 @@
         </div>
     </div>
     <%- include('includes/footer.ejs') -%>
-    <script src="script.js"></script>
+    <script src="scripts/script.js"></script>
 </body>
 
 </html>

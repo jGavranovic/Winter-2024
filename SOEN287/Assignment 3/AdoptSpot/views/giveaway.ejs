@@ -13,18 +13,22 @@
         <div class="menu">
             <ul>
                 <li><a href="/" >Home</a></li>
-                <li><a href="browse">Browse Available Pets</a></li>
+                <!-- <li><a href="browse">Browse Available Pets</a></li> -->
                 <li><a href="find">Find a dog/cat</a></li>
                 <li><a href="dog-care">Dog Care</a></li>
                 <li><a href="cat-care">Cat Care</a></li>
+                <li><a href="createaccount">Create Account</a></li>
                 <li><a href="giveaway" class="active">Have a pet to give away</a></li>
                 <li><a href="contact">Contact Us</a></li>
+                <% if (typeof authenticated !== 'undefined' && authenticated) {%>
+                    <li><a href="logout">Logout</a></li>
+                    <% } %>
             </ul>
         </div>
         <div class="content">
             <h1>Donate a pet</h1>
             <p>In order to find a good home for your pet, please fill in the form below!</p>
-            <form id="petDonate" method="post" onsubmit="return validateSubmit(this)">
+            <form id="petDonate" method="post" action="/giveaway" onsubmit="return validateSubmit(this)">
                 <fieldset>
                     <legend>Pet donation form</legend>
 
@@ -36,31 +40,26 @@
 
                     <label for="breed">Breed:</label>
                     <input type="text" name="breed" id="breed">
-                    <input type="checkbox" name="breed" id="mixed" value="yes">
+                    <input type="checkbox" name="breed" id="mixed" value="mixed">
                     <label for="mixed">Mixed</label><br><br>
 
                     <label for="age">Age: </label>
-                    <select name="age" id="age">
-                        <option value="0to1">0-1 years old</option>
-                        <option value="2to5">2-5 years old</option>
-                        <option value="6to10">6 to 10 years old</option>
-                        <option value="11plus">11+ years old</option>
-                    </select><br><br>
+                    <input type="text" id="age" name="age" required><br><br>
 
                     <label>Sex: </label>
                     <input type="radio" id="male" value="male" name="sex" required>
                     <label for="male">Male</label>
                     <input type="radio" name="sex" id="female" value="female">
-                    <label for="female">Female</label>
-                    <input type="radio" name="sex" id="dontCareSex" value="dontCareSex">
-                    <label for="dontCareSex">No preference</label><br><br>
+                    <label for="female">Female</label><br><br>
+                    <!-- <input type="radio" name="sex" id="dontCareSex" value="dontCareSex">
+                    <label for="dontCareSex">No preference</label><br><br> -->
 
                     <label>Gets along with: </label>
-                    <input type="checkbox" name="getAlong[]" id="getAlongDog" value="yes">
+                    <input type="checkbox" name="getsAlong[]" id="getAlongDog" value="dogs">
                     <label for="getAlongDog">Dog</label>
-                    <input type="checkbox" name="getAlong[]" id="getAlongCat" value="yes">
+                    <input type="checkbox" name="getsAlong[]" id="getAlongCat" value="cats">
                     <label for="getAlongCat">Cat</label>
-                    <input type="checkbox" name="getAlong[]" id="getAlongChildren" value="yes">
+                    <input type="checkbox" name="getsAlong[]" id="getAlongChildren" value="children">
                     <label for="getAlongChildren">Small children</label><br><br>
 
                     <div class="comments">
@@ -74,14 +73,14 @@
                     <label for="email">Email: </label>
                     <input type="email" id="email" name="email" required><br><br>
                     
-                    <button type="submit" form="petDonate">Search!</button>
+                    <button type="submit" form="petDonate">Submit!</button>
                     <button type="reset" form="petDonate">Clear</button>
                 </fieldset>
             </form>
         </div>
     </div>
     <%- include('includes/footer.ejs') -%>
-    <script src="script.js"></script>
+    <script src="scripts/script.js"></script>
 </body>
 
 </html>
