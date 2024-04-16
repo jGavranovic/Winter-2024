@@ -1,7 +1,3 @@
-1:user:species:breed:age:sex:getsAlong[]:email
-2:user:dog:boxer:5:male:children:jgavranovic4@gmail.com
-0:user:dog:BOXER:7:male:dogs,cats,children:jk@videotron.ca:FUNNY GOOF
-0:user:cat:mixed:1:female:cats,children:asano@sjump.com:goldfy
-0:user:dog:beagle:5:male:dogs,cats:george27@videotron.ca:
-0:user:dog:mixed:9:female:dogs,cats,children:drake@gmail.com:witch
-0:user:cat:mixed:321:female:cats:j@gmail.com:dsa
+1:jinxqc:dog:Boxer:6:male:cats,children:jovangavranovic4@gmail.com:Goofy
+2:drake:dog:mixed:5:male:dogs,cats:drake@gmail.com:sixx
+3:Basil:cat:Wild:4:female:dogs,cats,children:basil@hotmail.com:Loves nature

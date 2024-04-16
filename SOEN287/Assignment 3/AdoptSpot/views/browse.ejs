@@ -30,7 +30,7 @@
             <div class="petoffers">
                 
              
-                <% pets.forEach(function(pet) { if (pet.species == search.species && (search.sex == "dontCareSex" || search.sex == pet.sex) && (Array.isArray(search.breed) || search.breed.toLowerCase(pet.breed)) && (typeof search.getsAlong == 'undefined' ||search.getsAlong.every(v => pet.getsAlong.includes(v))) ) { %>
+                <% let match = false; pets.forEach(function(pet) { if (pet.species == search.species && (search.sex == "dontCareSex" || search.sex == pet.sex) && (Array.isArray(search.breed) || search.breed.toLowerCase()== pet.breed.toLowerCase()) && (typeof search.getsAlong == 'undefined' ||search.getsAlong.every(v => pet.getsAlong.includes(v))) && (pet.age >= search.age.split(',')[0] && pet.age <= search.age.split(',')[1])) { match = true; %>
                 <div class="offer">
                     <p>
                         <b>Sex: </b><%= pet.sex %><br>
@@ -42,6 +42,10 @@
                     </p>
                 </div>
                 <% }}) %>
+
+                <% if (!match) { %>
+                <h2>No match, try different search parameters.</h2>
+                <%}%>
                 
                 <!-- <div class="offer">
                     <img src="images/cat1.jpg" alt="">

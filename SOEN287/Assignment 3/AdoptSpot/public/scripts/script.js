@@ -38,6 +38,9 @@ function validateSubmit(form){
     } else if(form.sex.value==""){
         alert("Please select a sex");
         return false;
+    } else if (isNaN(form.age.value)) {
+        alert("Please enter a valid age")
+        return false;
     } else if (form.ownerName.value == ""){
         alert("Please enter an owner name");
         return false;

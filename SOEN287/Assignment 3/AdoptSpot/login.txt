@@ -1,4 +1,3 @@
-jinxqc:password123
-Bootinikie:password
-indronian:indra12
 drake:4allthedogs
+jinxqc:password123
+Basil:plant5

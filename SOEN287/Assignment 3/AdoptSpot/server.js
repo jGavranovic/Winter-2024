@@ -13,7 +13,6 @@ app.use(
     })
 )
 
-let counter = 0;
 
 app.use(express.static(path.join(__dirname,'public')))
 app.set('view engine','ejs')
@@ -25,6 +24,7 @@ app.get ('/', (req,res)=>{
 app.get('/browse', (req,res) => {
     const pets = parsePets();
     const search = req.query
+    console.log(search)
     res.render('browse',{pets: pets, search: search,authenticated : req.session.authenticated})
     // res.send(search)
 })
@@ -41,10 +41,17 @@ app.post('/giveaway', (req,res) => {
 
     const pet = req.body;
     const currentContent = fs.readFileSync('pets.txt')
-    
-    fs.writeFileSync('pets.txt',`${currentContent}\r\n${counter}:user:${pet.species}:${Array.isArray(pet.breed)?pet.breed[1]:pet.breed}:${pet.age}:${pet.sex}:${pet.getsAlong}:${pet.email}:${pet.comments}`)
+    const currentPets = parsePets();
+    var counter;
+    try {
+        counter = parseInt(currentPets.slice(-1)[0].id);
+    } catch (error) {
+        counter = 0
+    }
+
+    fs.writeFileSync('pets.txt',`${currentContent}${(currentContent == '')?'':'\r\n'}${++counter}:${req.session.username}:${pet.species}:${Array.isArray(pet.breed)?pet.breed[1]:pet.breed}:${pet.age}:${pet.sex}:${pet.getsAlong}:${pet.email}:${pet.comments}`)
     console.log(pet)
-    res.render('giveaway')
+    res.render('giveaway',{authenticated:req.session.authenticated})
 })
 
 app.post('/createaccount', (req, res) => {
@@ -60,6 +67,7 @@ app.post('/authenticate', (req,res)=>{
     const account = req.body;
     if (validLogin(account)){
         req.session.authenticated = true;
+        req.session.username = account.username;
         res.render('giveaway',{authenticated : req.session.authenticated})
     } else {
         console.log('Invalid login, try again')
@@ -69,7 +77,9 @@ app.post('/authenticate', (req,res)=>{
 })
 
 app.get('/logout', (req,res)=>{
-    req.session.authenticated = false;
+    // req.session.authenticated = false;
+    delete req.session.authenticated;
+    delete req.session.username;
     res.render('index', {authenticated : req.session.authenticated})
 })
 app.get('/:page', (req,res)=> {
@@ -90,7 +100,7 @@ function parsePets() {
             id: splitPetsColon[i][0],
             species : splitPetsColon[i][2],
             breed : splitPetsColon[i][3],
-            age : splitPetsColon[i][4],
+            age : parseFloat(splitPetsColon[i][4]),
             sex : splitPetsColon[i][5],
             getsAlong : splitPetsColon[i][6].split(','),
             email: splitPetsColon[i][7],
@@ -145,4 +155,4 @@ function validLogin(account){
     return match;
 }
 
-app.listen(3000)
+app.listen(5499)
