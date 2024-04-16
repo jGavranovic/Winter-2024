@@ -6,12 +6,30 @@ app.set("view engine", "ejs")
 app.get("/", (req,res) => {
     res.render('part1')
 })
-app.post("/", (req,res) => {
-    res.write("fat32")
-    res.end();
-})
+
 app.listen(3000, () => {
     console.log("Server started at http://localhost:3000");
+})
+
+app.get('/findSummation', (req ,res)=>{
+    res.send(200, findSummation(parseInt(req.query.sumInput)))
+})
+
+app.get('/upperCaseFirstandLast', (req ,res)=>{
+    res.send(200, uppercaseFirstandLast(req.query.uppercaseInput))
+})
+
+app.get('/findAverageAndMedian', (req ,res)=>{
+    let input = req.query.findAverageAndMedian.split(" ");
+    var nums = new Array(input.length)
+    for (i=0;i<nums.length;i++){
+        nums[i] = parseFloat(input[i])
+    }
+    res.send(200, findAverageAndMedian(nums))
+})
+
+app.get('/find4Digits', (req,res)=>{
+    res.send(200, find4Digits(req.query.find4Digits))
 })
 
 function findSummation(num){
@@ -52,7 +70,7 @@ function findAverageAndMedian(nums){
         median = (nums[Math.floor(nums.length / 2) -1 ] + nums[Math.floor(nums.length / 2) ]) / 2;
     }
 
-    return [average, median];
+    return {"average": average, "median":median};
 }
 
 function find4Digits(string){
