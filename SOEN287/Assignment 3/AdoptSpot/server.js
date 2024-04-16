@@ -4,6 +4,7 @@ const path = require('path')
 const fs = require('fs')
 const session = require('express-session')
 const check = require('syntax-error')
+const PORT = 3000;
 app.use(
     express.json(),
     express.urlencoded(),
@@ -112,7 +113,7 @@ function parsePets() {
 }
 
 function parseAccountList() {
-    const splitNewline = fs.readFileSync('login.txt').toString().split('\n')
+    const splitNewline = fs.readFileSync('login.txt').toString().split('\r\n')
     const splitColon = new Array(splitNewline.length)
 
     for (i=0;i<splitNewline.length;i++)
@@ -141,18 +142,18 @@ function alreadyExists(account, accountList) {
 
 function addAccount(account) {
     const content = fs.readFileSync('login.txt')
-    fs.writeFileSync('login.txt',`${content}\n${account.username}:${account.password}`)
+    fs.writeFileSync('login.txt',`${content}\r\n${account.username}:${account.password}`)
 }
 
 function validLogin(account){
     let match = false;
     const accountList = parseAccountList()
     accountList.forEach(accountEntry => {
-        if (accountEntry.username == account.username && accountEntry.password == account.password){
+        if (accountEntry.username.toLowerCase() == account.username.toLowerCase() && accountEntry.password == account.password){
             match = true;
         }
     })
     return match;
 }
 
-app.listen(5499)
+app.listen(PORT, () => console.log(`App start on port ${PORT}`))
