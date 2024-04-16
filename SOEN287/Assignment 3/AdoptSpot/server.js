@@ -4,7 +4,7 @@ const path = require('path')
 const fs = require('fs')
 const session = require('express-session')
 const check = require('syntax-error')
-const PORT = 3000;
+const PORT = 5049;
 app.use(
     express.json(),
     express.urlencoded(),

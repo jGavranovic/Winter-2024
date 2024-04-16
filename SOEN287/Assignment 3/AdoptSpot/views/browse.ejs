@@ -27,6 +27,8 @@
         </div>
         <div class="content">
             <h1>Available pets</h1>
+            <% let counter = 0;pets.forEach(function(pet) { if (pet.species == search.species && (search.sex == "dontCareSex" || search.sex == pet.sex) && (Array.isArray(search.breed) || search.breed.toLowerCase()== pet.breed.toLowerCase()) && (typeof search.getsAlong == 'undefined' ||search.getsAlong.every(v => pet.getsAlong.includes(v))) && (pet.age >= search.age.split(',')[0] && pet.age <= search.age.split(',')[1])) counter++;})%>
+            <h2 class="resultCount">Search results: <%= counter %> matches</h2>
             <div class="petoffers">
                 
              
@@ -42,7 +44,6 @@
                     </p>
                 </div>
                 <% }}) %>
-
                 <% if (!match) { %>
                 <h2>No match, try different search parameters.</h2>
                 <%}%>
