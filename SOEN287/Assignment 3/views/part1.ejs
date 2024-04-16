@@ -5,7 +5,7 @@
     </head>
     <body>
         <h1>Exercise one</h1>
-        <form action="/" method="GET">
+        <!-- <form action="/" method="GET">
             <label for="findSummation">findSummation</label>
             <input type="text" id="findSummation" name="sumInput"><br><br>
             <label for="upperCaseFirstandLast">upperCaseFirstandLast</label>
@@ -15,6 +15,26 @@
             <label for="find4Digits">find4Digits</label>
             <input type="text" id="find4Digits" name="find4Digits"><br><br>
             <button type="submit">Submit</button>
-        </form><br>
+        </form><br> -->
+        <form action="/findSummation" method="get">
+            <label for="findSummation">findSummation</label>
+            <input type="text" id="findSummation" name="sumInput">
+            <button type="submit">Submit</button><br><br>
+        </form> 
+        <form action="/upperCaseFirstandLast" method="get">
+            <label for="upperCaseFirstandLast">upperCaseFirstandLast</label>
+            <input type="text" id="upperCaseFirstandLast" name="uppercaseInput">
+            <button type="submit">Submit</button><br><br>
+        </form>
+        <form action="/findAverageAndMedian" method="get">
+            <label for="findAverageAndMedian">findAverageAndMedian (split with spaces)</label>
+            <input type="text" id="findAverageAndMedian" name="findAverageAndMedian">
+            <button type="submit">Submit</button><br><br>
+        </form>
+        <form action="/find4Digits" method="get">
+            <label for="find4Digits">find4Digits</label>
+            <input type="text" id="find4Digits" name="find4Digits">
+            <button type="submit">Submit</button><br><br>
+        </form>
     </body>
 </html>
